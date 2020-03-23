@@ -10,14 +10,18 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": true, // false is default; setting strict to true is really important, false can be considered when you are moving from JS to TS
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react", // support for react
+    // "noImplicitAny": true, // false is default;
+    /* when false - if the compiler cannot infer the variable type based on how it's used, the compiler silently defaults the type to any
+    when true - it still generates the JavaScript files, but it also reports an error */
+    
   },
   "include": [
     "src"
