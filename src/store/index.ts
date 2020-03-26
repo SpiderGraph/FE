@@ -7,7 +7,7 @@ import { Action } from 'redux'
 
 // create shape of all reducers
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     graph: graphReducer,
 })
 
