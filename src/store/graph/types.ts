@@ -13,6 +13,7 @@ export type Graph = {
 export type Leg = {
     legId: number,
     legName: string,
+    rotation: number,
     points: Point[]
 }
 

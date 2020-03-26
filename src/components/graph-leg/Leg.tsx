@@ -1,20 +1,27 @@
 import React, { useState, FunctionComponent } from 'react'
 
+type Props = {
+    rotation: number,
+}
 
-const Leg: FunctionComponent = () => {
+const Leg: FunctionComponent<Props> = ({rotation}) => {
     const [name, setName] = useState('')
+
     return (
-        <div>
-            <svg height="210" width="500">
-                <line x1="100" y1="100" x2="100" y2="200" className="line" />
-                <line x1="100" y1="100" x2="200" y2="160" className="line" />
-                <line x1="100" y1="100" x2="400" y2="140" className="line" />
-                <line x1="100" y1="100" x2="600" y2="120" className="line" />
-                <line x1="100" y1="100" x2="800" y2="100" className="line" />
-                <line x1="100" y1="100" x2="6000" y2="80" className="line" />
-            </svg>
-        </div>
+        <line x1="100" y1="0" x2="100" y2="100" transform={`rotate(${rotation}  100 100)`} />
     )
 }
 
 export default Leg
+
+
+{/* <svg width="200" height="200">
+<rect x="1" y="1" width="199" height="199" fill="none" stroke="grey" stroke-width="1" />
+<g stroke="steelblue" stroke-width="2" stroke-linecap="round">
+    <line x1="100" y1="0" x2="100" y2="100" transform="rotate(0  100 100)" />
+    <line x1="100" y1="0" x2="100" y2="100" transform="rotate(72  100 100)" />
+    <line x1="100" y1="0" x2="100" y2="100" transform="rotate(144  100 100)" />
+    <line x1="100" y1="0" x2="100" y2="100" transform="rotate(216  100 100)" />
+    <line x1="100" y1="0" x2="100" y2="100" transform="rotate(288  100 100)" />
+</g>
+</svg> */}
