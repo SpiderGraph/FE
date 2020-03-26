@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from 'react'
+import Graph from '../graph/Graph'
+import DispatchGraph from '../graph/DispatchGraph'
 
-
-const CreateGraphPage: FunctionComponent = () => {
+const CreateGraphPage: FunctionComponent= () => {
+ 
     return (
         <div>
-            Create new graph
+            <DispatchGraph graphName={''} legs={[]}/>
         </div>
     )
 }

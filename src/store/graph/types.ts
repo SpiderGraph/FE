@@ -5,20 +5,20 @@ export type GraphState = {
 }
 
 export type Graph = {
-    graphId: number,
+    graphId?: number,
     graphName: string,
     legs: Leg[]
 }
 
 export type Leg = {
-    legId: number,
+    legId?: number,
     legName: string,
-    rotation: number,
+    rotation: number | undefined,
     points: Point[]
 }
 
 export type Point = {
-    pointId: number,
+    pointId?: number,
     pointName: string,
     completed: boolean,
 }

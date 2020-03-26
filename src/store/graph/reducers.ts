@@ -43,8 +43,13 @@ const initialState: GraphState = {
     ]
 }
 
-export function graphReducer(state = initialState, {type}: GraphActionTypes){
-    switch(type){
+export function graphReducer(state = initialState, action: GraphActionTypes){
+    switch(action.type){
+        case ActionTypes.CREATE_GRAPH:
+            return {
+                ...state,
+                graphs: [...state.graphs, action.payload]
+            }
         default: 
             return state
     }

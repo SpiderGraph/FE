@@ -1,10 +1,8 @@
 import React, { useState, FunctionComponent } from 'react'
+import { Leg as LegType } from '../../store/graph/types'
 
-type Props = {
-    rotation: number,
-}
 
-const Leg: FunctionComponent<Props> = ({rotation}) => {
+const Leg: FunctionComponent<LegType> = ({rotation}) => {
     const [name, setName] = useState('')
 
     return (
