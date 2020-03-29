@@ -1,8 +1,9 @@
-import { Graph, CreateGraphAction, ActionTypes } from "./types";
+import { Graph, ActionTypes, GraphActionTypes } from "./types";
 
 
-
-export function createGraph(graph: Graph): CreateGraphAction{
+// for actions we need to type out its  parameters, and specify the return value
+ 
+export function createGraph(graph: Graph): GraphActionTypes{
     return {
         type: ActionTypes.CREATE_GRAPH,
         payload: graph

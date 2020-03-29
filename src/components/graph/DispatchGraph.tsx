@@ -18,7 +18,7 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
     }
 
     return (
-        <div>
+        <div className="dispatch-graph">
             <Graph graphName={name} legs={arrLegs} />
             <GraphForm 
                 name={name}

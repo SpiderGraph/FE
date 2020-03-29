@@ -12,31 +12,38 @@ const initialState: GraphState = {
                     legId: 1,
                     legName: 'exLeg',
                     rotation: 0,
-                    points: []
+                    points: [{pointName: 'point1', completed: false}]
                 },
                 {
                     legId: 1,
                     legName: 'exLeg',
                     rotation: 72,
-                    points: []
+                    points: [
+                        {pointName: 'point1', completed: false},
+                        {pointName: 'point2', completed: false},
+                        {pointName: 'point3', completed: false},
+                        ]
                 },
                 {
                     legId: 1,
                     legName: 'exLeg',
                     rotation: 144,
-                    points: []
+                    points: [
+                        {pointName: 'point2', completed: false},
+                        {pointName: 'point2', completed: false},
+                    ]
                 },
                 {
                     legId: 1,
                     legName: 'exLeg',
                     rotation: 216,
-                    points: []
+                    points: [{pointName: 'point2', completed: false},{pointName: 'point2', completed: false},{pointName: 'point2', completed: false},]
                 },
                 {
                     legId: 1,
                     legName: 'exLeg',
                     rotation: 288,
-                    points: []
+                    points: [{pointName: 'point2', completed: false},{pointName: 'point2', completed: false},]
                 }
             ]
         }

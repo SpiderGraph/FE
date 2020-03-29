@@ -1,0 +1,130 @@
+.graph{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+//Dispatch graph
+$breakpoint-tablet: 800px;
+
+@media (max-width: $breakpoint-tablet) {
+  .dispatch-graph{
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media (min-width: $breakpoint-tablet){
+  .dispatch-graph{
+    align-items: flex-start;
+  }
+}
+
+.dispatch-graph{
+    display: flex;
+}
+
+// Graph form
+
+@mixin field {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    height: 25px;
+    margin-bottom: 15px;
+}
+
+@mixin position-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@mixin position-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.graph-form{
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    @include position-column();
+    .title{
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+    .form *{
+        width: 100%;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: auto;
+        .fields{
+            @include position-row();
+        }
+        .field{
+            @include field();
+            width: 95%;
+            background: rgb(240, 240, 240);
+            &:hover {
+                background: rgb(228, 228, 228);
+            }
+            &:active, &:focus{
+                border: 2px solid rgb(49, 210, 231);
+            }
+        }
+        .btns{
+            @include position-row();
+        }
+        .btn{
+            @include field();
+            background: #FF7C8C;
+            width: 100px;
+            border-radius: 4px;
+            color: white;
+            margin: 3px;
+            user-select: none;
+            cursor: pointer;
+            &:hover{
+                background: rgb(255, 97, 116);
+            }
+        }
+        .btn-dis{
+            pointer-events: none;
+            cursor: not-allowed;
+            user-select: none;
+            opacity: 0.65;
+        }
+        .btn-add{
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.5rem;
+            background: rgb(197, 197, 197);
+            color: white;
+            -webkit-appearance: none;
+            outline: none;
+            border: none;
+            margin: 0 5px;
+            margin-bottom: 15px;
+            &:hover {
+                background: rgb(173, 173, 173);
+            }
+        }
+        .label{
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
