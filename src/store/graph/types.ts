@@ -38,7 +38,7 @@ export enum ActionTypes {
 }
 
 export type GetGraphsAction = {
-    type: ActionTypes.CREATE_GRAPH,
+    type: ActionTypes.GET_GRAPHS,
 }
 
 export type CreateGraphAction = {

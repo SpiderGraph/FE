@@ -20,11 +20,14 @@ type Props = PropsFromRedux & {
     setName(graphName: string): void,
 }
 
-let POINTS_LIMIT = 6
+let POINTS_LIMIT = 4
+let POINTS_MIN = 1
 
 const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, createGraph}) => {
-    const [points, setPoints] = useState<Point[]>([{pointName: '', completed: false,}, {pointName: '', completed: false}])
+    let initPoints: Point[] = [{pointName: '', completed: false,}, {pointName: '', completed: false}]
+    const [points, setPoints] = useState<Point[]>(initPoints)
     const [newLeg, setNewLeg] = useState<LegType>({legName: '', rotation: undefined, points: [] })
+    const [btnDisable, setBtnDisable] = useState(1)
 
     function handleSubmit(){
         // format graph object and send it to the server and to the redux store
@@ -33,7 +36,6 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
             legs: legs,
         }
         createGraph(newGraph)
-        console.log('NEW GRAPH ', newGraph)
     }
 
     function handlePoint(e: any){
@@ -47,6 +49,14 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
         if(points.length < POINTS_LIMIT){
             setPoints([...points, {pointName: e.target.value, completed: false}])
         }
+    }
+
+    function deletePoint(){
+        if(points.length > POINTS_MIN){
+            let newArr = points.slice(0, -1)
+            setPoints(newArr)
+        }
+        
     }
     
     function handleLeg(e: any){
@@ -66,25 +76,52 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
             return {...item, rotation: newRotation}
         }) // update rotation in every leg
         setLegs(updatedRotation)
-        
+        setPoints(initPoints)
     }
 
 
     return(
-        <div>
-            <form onSubmit={(e) => e.preventDefault()}>
-                <input name="graphName" value={name} onChange={(e) => setName(e.target.value)}/>
-                <input name="legName" value={newLeg.legName} onChange={handleLeg}/>
-                {points.map((item,index) => 
-                    <input 
-                        key={index}
-                        name={`point_${index}`}
-                        value={item.pointName} 
-                        onChange={handlePoint} />)}
+        <div className="graph-form">
+            <h1 className="title">Create a new graph</h1>
+            <form onSubmit={(e) => e.preventDefault()} className="form">
+                <div className="fields">
+                    <label htmlFor="graph-name" className="label">
+                        Graph Name
+                        <input id="graph-name" name="graphName" value={name} onChange={(e) => setName(e.target.value)} className="field"/>
+                    </label>
 
-                <button onClick={addPoint}>ADD POINT</button>
-                <button onClick={submitLeg}>ADD LEG</button>
-                <button onClick={handleSubmit}>CREATE GRAPH</button>
+                    <label htmlFor="leg-name" className="label">
+                        Leg Name
+                        <input id="leg-name" name="legName" value={newLeg.legName} onChange={handleLeg}  className="field"/>
+                    </label>
+                </div>
+
+                <div className="fields">
+                    {points.map((item,index) => 
+                     <label htmlFor={`point-` + index} className="label">
+                        Point {index + 1}
+                        <input 
+                            id={`point-` + index}
+                            key={index}
+                            name={`point_${index}`}
+                            value={item.pointName} 
+                            onChange={handlePoint} 
+                            className="field"
+                        />
+                     </label>
+                    )}
+                </div>
+
+                <div className="btns">
+                    <button onClick={addPoint} className={`btn-add ${points.length >= POINTS_LIMIT && ' btn-dis'}`}>+</button>
+                    <button onClick={deletePoint} className={`btn-add ${points.length <= POINTS_MIN && ' btn-dis'}`}>-</button>
+                </div>
+
+                <div className="btns">
+                    <button onClick={submitLeg} className={`btn`}>ADD LEG</button>
+                    <button className="btn">ADD DATASET</button>
+                    <button onClick={handleSubmit} className="btn">CREATE GRAPH</button>
+                </div>
             </form>
         </div>
     )

@@ -1,11 +1,12 @@
 import React, { FunctionComponent } from 'react'
-import { Link } from 'react-router-dom'
+import {NavLink } from 'react-router-dom'
+import './styles.scss'
 
 const NavBar: FunctionComponent = () => {
     return (
-        <nav>
-            <Link to="/">Graphs</Link>
-            <Link to="/create-graph">Create Graph</Link>
+        <nav className="navbar">
+            <NavLink exact to="/" activeClassName="selected">Graphs</NavLink>
+            <NavLink exact to="/create-graph" activeClassName="selected">Create Graph</NavLink>
         </nav>
     )
 }
