@@ -25,7 +25,8 @@ const Graph: FunctionComponent<Props> = ({graphName, legs}) => {
       
         return vertexIndices.map((index) => {
           return {
-            theta: degreesToRadians(angle * index),
+            // theta: offset + degreesToRadians(angle * index),
+            theta: degreesToRadians(-angle * index),
             r: radius[index],
           };
         });
@@ -70,7 +71,7 @@ const Graph: FunctionComponent<Props> = ({graphName, legs}) => {
 
     function generateRadius(legs:LegType[]){
         return legs.map(item =>{
-            return halfHeight - (item.points.length * 65)
+            return halfHeight - (item.points.length * 63)
         })
     }
   
