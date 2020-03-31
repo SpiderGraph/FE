@@ -70,7 +70,7 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
         legWithPoints.points = points // add points to new leg
         newLegs.push(legWithPoints)  //  add a new leg to array of legs
         let rotationStep:number = 360 / newLegs.length // calculate new rotation by dividing 360 by the number of legs in the array
-        let newRotation = rotationStep
+        let newRotation = -rotationStep
         let updatedRotation = newLegs.map(item =>{
             newRotation += rotationStep
             return {...item, rotation: newRotation}
