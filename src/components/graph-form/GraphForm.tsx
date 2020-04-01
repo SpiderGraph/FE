@@ -1,9 +1,13 @@
 import React, { FunctionComponent, useState } from 'react'
+// styles
+import './styles.scss'
 // components
-import { Leg as LegType, Graph, Point} from '../../store/graph/types'
+import { Leg as LegType, Graph, Point, DataSet as DataSetType} from '../../store/graph/types'
 // redux
 import {connect, ConnectedProps} from 'react-redux'
 import {thunkCreateGraph as createGraph} from '../../store/graph/thunk'
+// utils
+import { generatePolygon, generateRadius } from './dataSet'
 
 const mapState = null
 
@@ -16,27 +20,36 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux & {
     legs: LegType[],
     name: string,
+    datasets: DataSetType[],
     setLegs(graphLegs: LegType[]): void,
     setName(graphName: string): void,
+    sendDataset(dataset: DataSetType): void,
+    updateDatasets(dataset: DataSetType[]): void,
 }
 
 let POINTS_LIMIT = 4
 let POINTS_MIN = 1
 
-const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, createGraph}) => {
+const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, setName, createGraph, sendDataset, updateDatasets}) => {
     let initPoints: Point[] = [{pointName: '', completed: false,}, {pointName: '', completed: false}]
     const [points, setPoints] = useState<Point[]>(initPoints)
     const [newLeg, setNewLeg] = useState<LegType>({legName: '', rotation: undefined, points: [] })
-    const [btnDisable, setBtnDisable] = useState(1)
+    const [dataset, setDataset] = useState<DataSetType>({dataSetName: '', color: '#ff0000', points: ''})
+
+    /* Form submition */
 
     function handleSubmit(){
         // format graph object and send it to the server and to the redux store
         let newGraph: Graph = {
             graphName: name,
             legs: legs,
+            dataSets: datasets
         }
+        console.log('datasets ', datasets)
         createGraph(newGraph)
     }
+
+    /* Points manipulation */
 
     function handlePoint(e: any){
         let index = e.target.name.split('_')[1]
@@ -58,6 +71,8 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
         }
         
     }
+
+    /* Legs manipulation */
     
     function handleLeg(e: any){
        setNewLeg({...newLeg, [e.target.name]: e.target.value})
@@ -77,8 +92,36 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
         }) // update rotation in every leg
         setLegs(updatedRotation)
         setPoints(initPoints)
+
+        // update all datasets when adding a leg
+        updateDatasets(generateDatasets(datasets, newLegs))
     }
 
+    /* DataSet manipulation */
+
+    function handleDataSet(e: any){
+        setDataset({...dataset, [e.targer.name]: e.targer.value})
+    }
+
+    function handleDatasetColor(e: any){
+        setDataset({...dataset, color: e.target.value})
+    }
+
+    function generateDatasets(datasets: DataSetType[], legs:LegType[]):DataSetType[]{
+        return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
+    }
+
+    function submitDataSet(){
+        let points = generatePolygon(legs)
+        let radius = generateRadius(legs)
+        let polygon:DataSetType = {
+            radius: radius,
+            dataSetName: dataset.dataSetName,
+            color: dataset.color,
+            points: points,
+        }
+        sendDataset(polygon)
+    }
 
     return(
         <div className="graph-form">
@@ -117,9 +160,17 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, setLegs, setName, crea
                     <button onClick={deletePoint} className={`btn-add ${points.length <= POINTS_MIN && ' btn-dis'}`}>-</button>
                 </div>
 
+                <div className="ds">
+                    <label htmlFor="dataset-name" className="label">
+                        Dataset Name
+                        <input id="dataset-name" name="dataSetName" value={dataset.dataSetName} onChange={handleDataSet}  className="field"/>
+                    </label>
+                    <input type="color" name="color" value={dataset.color} className="color" onChange={handleDatasetColor}></input>
+                    <button className="btn" onClick={submitDataSet}>ADD DATASET</button>
+                </div>
+
                 <div className="btns">
                     <button onClick={submitLeg} className={`btn`}>ADD LEG</button>
-                    <button className="btn">ADD DATASET</button>
                     <button onClick={handleSubmit} className="btn">CREATE GRAPH</button>
                 </div>
             </form>
