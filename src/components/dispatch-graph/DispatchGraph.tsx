@@ -1,13 +1,19 @@
 import React, { FunctionComponent, useState } from 'react'
-import Graph from './Graph'
-import GraphForm from './GraphForm'
-import { Graph as GraphType, Leg} from '../../store/graph/types'
+// styles
+import './styles.scss'
+// components
+import Graph from '../graph/Graph'
+import GraphForm from '../graph-form/GraphForm'
+// types
+import { Graph as GraphType, Leg, DataSet} from '../../store/graph/types'
 
 type Props = GraphType
 
 const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
     const [name, setName] = useState(graphName)
     const [arrLegs, setArrLegs] = useState(legs)
+    const [datasets, setDatasets] = useState<DataSet[]>([])
+
 
     function handleGraphName(graphName: string){
         setName(graphName)
@@ -17,14 +23,22 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
         setArrLegs(graphLegs)
     }
 
+    function handleDatasets(dataset: DataSet){
+        setDatasets([...datasets, dataset])
+    }
+
+
     return (
         <div className="dispatch-graph">
-            <Graph graphName={name} legs={arrLegs} />
+            <Graph graphName={name} legs={arrLegs} dataSets={datasets}/>
             <GraphForm 
                 name={name}
                 legs={arrLegs}
+                datasets={datasets}
                 setName={handleGraphName}
                 setLegs={handleLegs}
+                sendDataset={handleDatasets}
+                updateDatasets={setDatasets}
             />
         </div>
     )

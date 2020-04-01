@@ -22,7 +22,7 @@ const GraphsPage: FunctionComponent<Props> = ({graphs}) => {
         <div>
             Graphs
             {graphs.map(graph =>
-                <Graph graphName={graph.graphName} legs={graph.legs} graphId={graph.graphId}/>
+                <Graph graphName={graph.graphName} legs={graph.legs} graphId={graph.graphId} dataSets={graph.dataSets}/>
             )}
         </div>
     )

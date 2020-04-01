@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import Graph from '../graph/Graph'
-import DispatchGraph from '../graph/DispatchGraph'
+import DispatchGraph from '../dispatch-graph/DispatchGraph'
 
 const CreateGraphPage: FunctionComponent= () => {
  

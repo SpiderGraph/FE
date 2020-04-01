@@ -7,6 +7,7 @@ export type GraphState = {
 export type Graph = {
     graphId?: number,
     graphName: string,
+    dataSets?: DataSet[],
     legs: Leg[]
 }
 
@@ -15,6 +16,14 @@ export type Leg = {
     legName: string,
     rotation: number | undefined,
     points: Point[]
+}
+
+export type DataSet = {
+    dataSetId?: number,
+    radius?: number[],
+    dataSetName: string,
+    points: string,
+    color: string,
 }
 
 export type Point = {
