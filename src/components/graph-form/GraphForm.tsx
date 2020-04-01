@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from 'react'
 // styles
 import './styles.scss'
+import '../form-parts/buttons.scss'
 // components
 import { Leg as LegType, Graph, Point, DataSet as DataSetType} from '../../store/graph/types'
 // redux
@@ -127,7 +128,8 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
         <div className="graph-form">
             <h1 className="title">Create a new graph</h1>
             <form onSubmit={(e) => e.preventDefault()} className="form">
-                <div className="fields">
+                
+                <div className="flex-wrap">
                     <label htmlFor="graph-name" className="label">
                         Graph Name
                         <input id="graph-name" name="graphName" value={name} onChange={(e) => setName(e.target.value)} className="field"/>
@@ -139,7 +141,7 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
                     </label>
                 </div>
 
-                <div className="fields">
+                <div className="flex-wrap">
                     {points.map((item,index) => 
                      <label htmlFor={`point-` + index} className="label">
                         Point {index + 1}
@@ -155,23 +157,23 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
                     )}
                 </div>
 
-                <div className="btns">
-                    <button onClick={addPoint} className={`btn-add ${points.length >= POINTS_LIMIT && ' btn-dis'}`}>+</button>
-                    <button onClick={deletePoint} className={`btn-add ${points.length <= POINTS_MIN && ' btn-dis'}`}>-</button>
+                <div className="flex-center line">
+                    <button onClick={addPoint} className={`button-metal btn-add ${points.length >= POINTS_LIMIT && ' btn-dis'}`}>+</button>
+                    <button onClick={deletePoint} className={`button-metal btn-add ${points.length <= POINTS_MIN && ' btn-dis'}`}>-</button>
                 </div>
 
-                <div className="ds">
+                <div className="flex-start block">
                     <label htmlFor="dataset-name" className="label">
                         Dataset Name
                         <input id="dataset-name" name="dataSetName" value={dataset.dataSetName} onChange={handleDataSet}  className="field"/>
                     </label>
                     <input type="color" name="color" value={dataset.color} className="color" onChange={handleDatasetColor}></input>
-                    <button className="btn" onClick={submitDataSet}>ADD DATASET</button>
+                    <button className="btn button-metal" onClick={submitDataSet}>ADD DATASET</button>
                 </div>
 
-                <div className="btns">
-                    <button onClick={submitLeg} className={`btn`}>ADD LEG</button>
-                    <button onClick={handleSubmit} className="btn">CREATE GRAPH</button>
+                <div className="flex-center">
+                    <button onClick={submitLeg} className="button-metal">ADD LEG</button>
+                    <button onClick={handleSubmit} className="button-metal">CREATE GRAPH</button>
                 </div>
             </form>
         </div>
