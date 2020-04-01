@@ -7,27 +7,48 @@
     margin-bottom: 15px;
 }
 
-@mixin position-row {
+@mixin flex-wrap {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
-@mixin position-column {
+@mixin flex-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-center{
+    @include flex-center()
+}
+
+.flex-start{
+    @include flex-start()
+}
+
 .graph-form{
+    @include flex-column();
     width: 100%;
     max-width: 400px;
     margin: auto;
-    background: white;
+    background:  rgb(46, 46, 46);
+    box-shadow: -2px 6px 8px #080808;
+    color: rgb(255, 221, 126);
     padding: 15px;
     border-radius: 4px;
-    @include position-column();
     .title{
         font-size: 1.8rem;
         margin-bottom: 40px;
@@ -42,44 +63,60 @@
         align-items: center;
         width: 100%;
         margin: auto;
-        .ds{
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-
+        .line{
+            border-bottom: 1px solid #f8e36e6e;
+            margin-bottom: 15px;
+        }
+        .block{
+           margin-bottom: 40px;
         }
         .color{
             height: 25px;
             width: 25px;
         }
-        .fields{
-            @include position-row();
+        .flex-wrap{
+            @include flex-wrap();
         }
         .field{
             @include field();
             width: 95%;
-            background: rgb(240, 240, 240);
+            background: rgb(46, 46, 46);
+            border: 1px solid coral;
             &:hover {
-                background: rgb(228, 228, 228);
+                background: rgb(46, 46, 46);
             }
             &:active, &:focus{
-                border: 2px solid rgb(49, 210, 231);
+                border: 2px solid rgb(255, 194, 80);
             }
-        }
-        .btns{
-            @include position-row();
         }
         .btn{
             @include field();
-            background: #FF7C8C;
+            background: rgb(46, 46, 46);
+            border: 1px solid coral;
+            border-radius: 15px;
             width: 100px;
-            border-radius: 4px;
             color: white;
-            margin: 3px;
+            margin: 10px;
             user-select: none;
             cursor: pointer;
-            &:hover{
-                background: rgb(255, 97, 116);
+            &:active{
+                border: 1px solid rgb(255, 206, 188);
+            }
+        }
+        .btn-add{
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.5rem;
+            background: #272727;
+            border: 1px solid #ffdd7e;
+            color: white;
+            -webkit-appearance: none;
+            outline: none;
+            margin: 0 5px;
+            margin-bottom: 15px;
+            &:active{
+                border: 1.5px solid #ffeaaf;
             }
         }
         .btn-dis{
@@ -87,23 +124,6 @@
             cursor: not-allowed;
             user-select: none;
             opacity: 0.65;
-        }
-        .btn-add{
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            font-size: 1.5rem;
-            background: rgb(197, 197, 197);
-            color: white;
-            -webkit-appearance: none;
-            outline: none;
-            border: none;
-            margin: 0 5px;
-            margin-bottom: 15px;
-            &:hover {
-                background: rgb(173, 173, 173);
-            }
         }
         .label{
             width: 180px;

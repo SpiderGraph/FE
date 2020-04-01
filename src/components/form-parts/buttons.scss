@@ -1,0 +1,48 @@
+.button-metal{
+  color: #fff;
+  cursor: pointer;
+  background: #272727;
+  font-weight: 400;
+  height: 30px;
+  margin: 0 1rem;
+  position: relative;
+  text-transform: uppercase;
+
+  text-decoration: none;
+  -webkit-appearance: none;
+  outline: none;
+  user-select: none;
+}
+
+.button-metal {
+    border: 1px solid #ee213c;
+    overflow: hidden;
+    position: relative;
+    
+    &::after{
+      content: "";
+      background: rgb(255, 255, 255);
+      height: 155px;
+      left: -85px;
+      opacity: .2;
+      position: absolute;
+      top: -35px;
+      transform: rotate(35deg);
+      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+      width: 50px;
+    }
+
+    &:hover{
+      &::after {
+      left: 120%;
+      transition: all 550ms cubic-bezier(0.19, 1, 0.22, 1);
+     } 
+    }
+    &:active{
+      border: 1px solid #ff9eab;
+    }
+}
+
+
+
+
