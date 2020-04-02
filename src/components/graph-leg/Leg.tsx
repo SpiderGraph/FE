@@ -22,7 +22,7 @@ const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legN
     let position = xAxis // position for points, the bigger is number the closer is a point
 
     return (
-        <g transform={`rotate(${rotation}  ${xAxis} ${yAxis})`}>
+        <g transform={`rotate(${rotation}  ${xAxis} ${yAxis})`} style={{transition: `all 0.5s ease-out`}}>
             {points.map((item, index) => {
                 position -= 60 // decrement the position to ship point
             return(

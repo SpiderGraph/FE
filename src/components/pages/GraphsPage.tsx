@@ -4,6 +4,8 @@ import { RootState } from '../../store/index'
 import {connect, ConnectedProps} from 'react-redux'
 // components
 import Graph from '../graph/Graph'
+import Card from '../card/Card'
+import { findByLabelText } from '@testing-library/react'
 
 const mapState = (state: RootState) => ({
     graphs: state.graph.graphs
@@ -19,10 +21,17 @@ type Props = PropsFromRedux
 
 const GraphsPage: FunctionComponent<Props> = ({graphs}) => {
     return (
-        <div>
-            Graphs
+        <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '100px'}}>
             {graphs.map(graph =>
-                <Graph graphName={graph.graphName} legs={graph.legs} graphId={graph.graphId} dataSets={graph.dataSets}/>
+                <Card 
+                title={graph.graphName}
+                content={
+                    <Graph graphName={graph.graphName}
+                        allowDataset={false}
+                        legs={graph.legs}
+                        graphId={graph.graphId} 
+                        dataSets={graph.dataSets}/>}>
+                </Card>
             )}
         </div>
     )

@@ -35,19 +35,24 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
     let initPoints: Point[] = [{pointName: '', completed: false,}, {pointName: '', completed: false}]
     const [points, setPoints] = useState<Point[]>(initPoints)
     const [newLeg, setNewLeg] = useState<LegType>({legName: '', rotation: undefined, points: [] })
-    const [dataset, setDataset] = useState<DataSetType>({dataSetName: '', color: '#ff0000', points: ''})
+    const [dataset, setDataset] = useState({dataSetName: '', color: '#ff0000'})
+    const [errors, setErrors] = useState({leg: "", point: "", graph: "", dataset: ""})
 
     /* Form submition */
 
     function handleSubmit(){
         // format graph object and send it to the server and to the redux store
-        let newGraph: Graph = {
-            graphName: name,
-            legs: legs,
-            dataSets: datasets
+        if(name !== ''){
+            let newGraph: Graph = {
+                graphName: name,
+                legs: legs,
+                dataSets: datasets
+            }
+            console.log('datasets ', datasets)
+            createGraph(newGraph)
+        }else{
+           handleError('graph', 'field-error')
         }
-        console.log('datasets ', datasets)
-        createGraph(newGraph)
     }
 
     /* Points manipulation */
@@ -57,6 +62,7 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
         let new_points = points.slice()
         new_points[index] = {...new_points[index], pointName: e.target.value}
         setPoints(new_points)
+        handleError('point', '')
     }
     
     function addPoint(e: any){
@@ -73,35 +79,61 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
         
     }
 
+    function validatePoint(){
+        for(let i=0; i< points.length; i++){
+            if(points[i].pointName === ''){
+                return false
+            }
+        }
+        return true
+    }
+
     /* Legs manipulation */
     
     function handleLeg(e: any){
        setNewLeg({...newLeg, [e.target.name]: e.target.value})
+       handleError('leg', '')
     }
     
     function submitLeg(){
-        // clean filled info about leg name and points
-        let newLegs:LegType[] = legs.slice() // copy legs array from a parent state
-        let legWithPoints = {...newLeg} // copy just craeted leg
-        legWithPoints.points = points // add points to new leg
-        newLegs.push(legWithPoints)  //  add a new leg to array of legs
-        let rotationStep:number = 360 / newLegs.length // calculate new rotation by dividing 360 by the number of legs in the array
-        let newRotation = -rotationStep
-        let updatedRotation = newLegs.map(item =>{
-            newRotation += rotationStep
-            return {...item, rotation: newRotation}
-        }) // update rotation in every leg
-        setLegs(updatedRotation)
-        setPoints(initPoints)
+        if(newLeg.legName !== ''){
+            if(validatePoint()){
+                // clean filled info about leg name and points
+                let newLegs:LegType[] = legs.slice() // copy legs array from a parent state
+                let legWithPoints = {...newLeg} // copy just craeted leg
+                legWithPoints.points = points // add points to new leg
+                newLegs.push(legWithPoints)  //  add a new leg to array of legs
+                let rotationStep:number = 360 / newLegs.length // calculate new rotation by dividing 360 by the number of legs in the array
+                let newRotation = -rotationStep
+                let updatedRotation = newLegs.map(item =>{
+                newRotation += rotationStep
+                return {...item, rotation: newRotation}
+                }) // update rotation in every leg
+                setLegs(updatedRotation)
+                setPoints(initPoints)
 
-        // update all datasets when adding a leg
-        updateDatasets(generateDatasets(datasets, newLegs))
+                // update all datasets when adding a leg
+                updateDatasets(generateDatasets(datasets, newLegs)) 
+
+                handleError('point', '')
+            }else{
+                handleError('point', 'field-error')
+            }
+        }else{
+            handleError('leg', 'field-error')
+        }
+       
+    }
+
+    function handleError(errorName: string, errorClass: string){
+        setErrors({...errors, [errorName]: errorClass})
     }
 
     /* DataSet manipulation */
 
     function handleDataSet(e: any){
-        setDataset({...dataset, [e.targer.name]: e.targer.value})
+        setDataset({...dataset, dataSetName: e.target.value})
+        handleError('dataset', '')
     }
 
     function handleDatasetColor(e: any){
@@ -113,15 +145,20 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
     }
 
     function submitDataSet(){
-        let points = generatePolygon(legs)
-        let radius = generateRadius(legs)
-        let polygon:DataSetType = {
+        if(dataset.dataSetName !== '' && legs.length > 2){
+            let points = generatePolygon(legs)
+            let radius = generateRadius(legs)
+            let polygon:DataSetType = {
             radius: radius,
             dataSetName: dataset.dataSetName,
             color: dataset.color,
             points: points,
+            }
+            sendDataset(polygon)
+        }else{
+            handleError('dataset', 'field-error')
         }
-        sendDataset(polygon)
+        
     }
 
     return(
@@ -132,12 +169,12 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
                 <div className="flex-wrap">
                     <label htmlFor="graph-name" className="label">
                         Graph Name
-                        <input id="graph-name" name="graphName" value={name} onChange={(e) => setName(e.target.value)} className="field"/>
+                        <input id="graph-name" name="graphName" value={name} onChange={(e) => {setName(e.target.value); handleError('graph', '')}} className={`field ${errors.graph}`}/>
                     </label>
 
                     <label htmlFor="leg-name" className="label">
                         Leg Name
-                        <input id="leg-name" name="legName" value={newLeg.legName} onChange={handleLeg}  className="field"/>
+                        <input id="leg-name" name="legName" value={newLeg.legName} onChange={handleLeg}  className={`field ${errors.leg}`} />
                     </label>
                 </div>
 
@@ -151,7 +188,7 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
                             name={`point_${index}`}
                             value={item.pointName} 
                             onChange={handlePoint} 
-                            className="field"
+                            className={`field ${errors.point}`}
                         />
                      </label>
                     )}
@@ -162,10 +199,10 @@ const GraphFrom: FunctionComponent<Props> = ({name, legs, datasets, setLegs, set
                     <button onClick={deletePoint} className={`button-metal btn-add ${points.length <= POINTS_MIN && ' btn-dis'}`}>-</button>
                 </div>
 
-                <div className="flex-start block">
+                <div className="flex-start line block">
                     <label htmlFor="dataset-name" className="label">
                         Dataset Name
-                        <input id="dataset-name" name="dataSetName" value={dataset.dataSetName} onChange={handleDataSet}  className="field"/>
+                        <input id="dataset-name" name="dataSetName" value={dataset.dataSetName} onChange={handleDataSet}  className={`field ${errors.dataset}`} />
                     </label>
                     <input type="color" name="color" value={dataset.color} className="color" onChange={handleDatasetColor}></input>
                     <button className="btn button-metal" onClick={submitDataSet}>ADD DATASET</button>

@@ -2,13 +2,14 @@ $breakpoint-tablet: 800px;
 
 @media (max-width: $breakpoint-tablet) {
   .dispatch-graph{
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: center;
   }
 }
 @media (min-width: $breakpoint-tablet){
   .dispatch-graph{
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
