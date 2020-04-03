@@ -1,0 +1,25 @@
+.label{
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.field-metal{
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    height: 30px;
+    margin-bottom: 15px;
+    
+    width: 95%;
+    background:   #3a4046;
+    border: 1.5px solid rgb(136, 136, 135);
+    margin-top: 5px;
+    color: white;
+    &:hover {
+        background:   #2e3135;
+    }
+    &:active, &:focus{
+        border: 2px solid rgb(255, 194, 80);
+    }
+}

@@ -29,7 +29,7 @@ export type DataSet = {
 export type Point = {
     pointId?: number,
     pointName: string,
-    completed: boolean,
+    completed?: boolean,
 }
 
 // Types for graph component

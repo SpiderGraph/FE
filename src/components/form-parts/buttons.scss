@@ -43,6 +43,22 @@
     }
 }
 
+.btn-add{
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 1.5rem;
+  background: #272727;
+  border: 1px solid coral;
+  color: white;
+  -webkit-appearance: none;
+  outline: none;
+  margin: 0 5px;
+  margin-bottom: 15px;
+  &:active{
+      border: 1px solid rgb(255, 206, 188);
+  }
+}
 
 
 
