@@ -1,0 +1,135 @@
+$error-color: rgb(255, 81, 81);
+
+@mixin field {
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    height: 30px;
+    margin-bottom: 15px;
+}
+
+@mixin flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+}
+
+@mixin flex-start {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-center{
+    @include flex-center()
+}
+
+.flex-start{
+    @include flex-start()
+}
+
+.graph-form{
+    @include flex-column();
+    width: 100%;
+    max-width: 400px;
+    background:  #3a4046d2;
+    border: 2px solid black;
+    box-shadow: -2px 6px 8px #000000;
+    color: white;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 20px;
+    .title{
+        font-size: 1.8rem;
+        margin-bottom: 40px;
+    }
+    .form *{
+        width: 100%;
+    }
+    .form{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto;
+        .line{
+            border-bottom: 1px solid #ff831e9c;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .block{
+           margin-bottom: 40px;
+        }
+        .color{
+            height: 25px;
+            width: 25px;
+        }
+        .flex-wrap{
+            @include flex-wrap();
+        }
+        .field{
+            @include field();
+            width: 95%;
+            background:   #3a4046;
+            border: 1.5px solid rgb(136, 136, 135);
+            margin-top: 5px;
+            color: white;
+            &:hover {
+                background:   #2e3135;
+            }
+            &:active, &:focus{
+                border: 2px solid rgb(255, 194, 80);
+            }
+        }
+        .field-error{
+            border: 2px solid $error-color;
+        }
+        .btn{
+            @include field();
+            background: rgb(46, 46, 46);
+            border: 1px solid coral;
+            border-radius: 15px;
+            width: 100px;
+            color: white;
+            margin: 10px;
+            user-select: none;
+            cursor: pointer;
+            &:active{
+                border: 1px solid rgb(255, 206, 188);
+            }
+        }
+        .btn-add{
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.5rem;
+            background: #272727;
+            border: 1px solid coral;
+            color: white;
+            -webkit-appearance: none;
+            outline: none;
+            margin: 0 5px;
+            margin-bottom: 15px;
+            &:active{
+                border: 1px solid rgb(255, 206, 188);
+            }
+        }
+        .btn-dis{
+            pointer-events: none;
+            cursor: not-allowed;
+            user-select: none;
+            opacity: 0.65;
+        }
+    }
+}
