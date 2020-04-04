@@ -8,9 +8,6 @@ import GraphForm from '../graph-forms/GraphForm'
 // types
 import { Graph as GraphType, Leg, DataSet} from '../../store/graph/types'
 
-import LegForm from '../graph-forms/LegForm'
-
-
 type Props = GraphType
 
 const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
@@ -35,17 +32,7 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
 
     return (
         <div className="dispatch-graph">   
-            <Graph graphName={name} legs={arrLegs} dataSets={datasets}/>
-            {/* <GraphForm 
-                name={name}
-                legs={arrLegs}
-                datasets={datasets}
-                setName={handleGraphName}
-                setLegs={handleLegs}
-                sendDataset={handleDatasets}
-                updateDatasets={setDatasets}
-            /> */}
-       
+            <Graph graphName={name} legs={arrLegs} dataSets={datasets}/>       
              <GraphForm
                 graphName={name}
                 pointFields={pointFields}
