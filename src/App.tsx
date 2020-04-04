@@ -16,6 +16,7 @@ const App: FunctionComponent = () => {
         <Switch>
           <Route exact path="/" component={GraphsPage} />
           <Route path="/create-graph" component={CreateGraphPage} />
+          <Route path="/edit-graph:id" component={CreateGraphPage} />
         </Switch>
       </div>
     </div>
