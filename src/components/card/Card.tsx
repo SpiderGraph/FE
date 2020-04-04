@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react'
+import {RouteComponentProps, withRouter} from 'react-router-dom'
 // styles
 import './styles.scss'
 
@@ -7,7 +8,9 @@ type Props = {
     content: React.ReactNode,
 }
 
-const Card:FunctionComponent<Props> = ({content, title}) => {
+
+
+const Card:FunctionComponent<Props & RouteComponentProps> = ({content, title, history}) => {
     return(
         <div className="card">
            
@@ -21,11 +24,11 @@ const Card:FunctionComponent<Props> = ({content, title}) => {
                 <h1 className="title">{title}</h1>
                 <div className="action-btns">
                     <span>Delete</span>
-                    <span>Edit</span>
+                    <span onClick={() => history.push(`/edit-graph${2}`)}>Edit</span>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Card
+export default withRouter(Card)

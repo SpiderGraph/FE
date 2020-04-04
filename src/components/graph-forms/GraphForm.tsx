@@ -94,6 +94,7 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         let newGraph: GraphType = {
             graphName: values.graphName,
             legs: props.legs,
+            dataSets: props.datasets
         }
         props.createGraph(newGraph)
     }
