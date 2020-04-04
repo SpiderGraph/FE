@@ -43,6 +43,19 @@
     }
 }
 
+.btn-secondary{
+  text-decoration: none;
+  -webkit-appearance: none;
+  outline: none;
+  user-select: none;
+  background: #272727;
+  border: 1px solid coral;
+  color: white;
+  width: 100px;
+  height: 30px;
+  border-radius: 15px;
+}
+
 .btn-add{
   border-radius: 50%;
   width: 35px;
@@ -60,5 +73,11 @@
   }
 }
 
+.btn-dis{
+  pointer-events: none;
+  cursor: not-allowed;
+  user-select: none;
+  opacity: 0.65;
+}
 
 

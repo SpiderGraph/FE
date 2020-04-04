@@ -5,8 +5,12 @@ import { withFormik, FormikProps, Form, Field } from 'formik';
 // styles
 import '../form-parts/fields.scss'
 import '../form-parts/buttons.scss'
+import '../form-parts/form-container.scss'
 // types
 import { Leg as LegType, DataSet as DataSetType, Point as PointType} from '../../store/graph/types';
+// utils
+import { generatePolygon} from './dataSet'
+
 
 // Shape of form values
 type FormValues = {
@@ -37,23 +41,19 @@ function range(count:number) {
 const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
         pointFields,
         setPointFields,
+        touched,
+        errors,
     }) => {
-    
-    function handlePoints(count:number){
-        if(pointFields > 0 && count <= POINTS_LIMIT){
-            setPointFields(count)
-        }
-    }
 
     return (
-        <Form>
+        <Form className="center">
             {/* leg field */}
-            <label htmlFor="leg-name" className="label">
+            <label htmlFor="leg-name" className="label  whole-width">
                 Leg Name
                 <Field
                     id="leg-name" 
                     type="text" 
-                    className="field-metal"
+                    className={`field-metal ${touched.legName && errors.legName && ' field-error'}`}
                     name="legName" />
             </label>
             {/* point fields */}
@@ -69,7 +69,7 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
                             id={`point-name` + (point + 1)}
                             type="text" 
                             name={`pointName`+ (point + 1)} 
-                            className="field-metal"
+                            className={`field-metal ${point + 1 === 1 && touched.pointName1 && errors.pointName1 && ' field-error'}`}
                         />
                     </label>
                 )}
@@ -77,18 +77,19 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
             {/* increment decrement buttons */}
             <div className="flex-center">
                 <button type="button"
-                        onClick={() => handlePoints(pointFields + 1)}
-                        className={`button-metal btn-add ${pointFields >= POINTS_LIMIT && ' btn-dis'}`}>
+                        onClick={() => (pointFields + 1) <= POINTS_LIMIT && setPointFields(pointFields + 1)}
+                        className={`button-metal btn-add ${pointFields === POINTS_LIMIT && ' btn-dis'}`}>
                             +
                 </button>
                 <button type="button"
-                        onClick={() => handlePoints(pointFields - 1)}
-                        className={`button-metal btn-add ${pointFields >= POINTS_LIMIT && ' btn-dis'}`}>
+                        onClick={() => (pointFields - 1) > 0 && setPointFields(pointFields - 1)}
+                        className={`button-metal btn-add ${pointFields === 1 && ' btn-dis'}`}>
                             -
                 </button>
             </div>
            {/* submit */}
-            <button className="btn button-metal" type="submit">
+            <button className="btn-secondary button-metal"
+                type="submit">
                 ADD LEG
             </button>
         </Form>
@@ -113,7 +114,8 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
         pointName4: props.initialPointName4 || '',
     }),
     validationSchema: Yup.object().shape({
-
+        legName: Yup.string().required('Please enter leg name'),
+        pointName1: Yup.string().required('Please enter a point name')
     }),
     handleSubmit: (values, {props}) => {
         // helper function for telling the compiler the obj argument will be a collection of string/value (string/any) pairs
@@ -124,7 +126,8 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
             return {
                 pointName: keyVal
             }
-        })
+        }).filter(item => item.pointName.length > 0)
+        console.log('BLA',newPoints)
         // form a new leg
         let newLeg:LegType = {
             legName: values.legName,
@@ -146,6 +149,13 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
             })
         // send all updated legs to parent state 
         props.setLegs(updatedLegs)
+
+        // update all datasets when adding a leg
+        const generateDatasets = (datasets: DataSetType[], legs:LegType[]):DataSetType[] => {
+            return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
+        }
+        props.updateDatasets(generateDatasets(props.datasets, newLegs)) 
+
     }
 })(InnerForm)
 
