@@ -75,7 +75,14 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                     </button>
 
                 </Form>
-                <GraphList legs={legs} datasets={datasets}/>
+                <GraphList 
+                 pointFields={pointFields}
+                 setPointFields={setPointFields}
+                 legs={legs}
+                 setLegs={setLegs}
+                 datasets={datasets}
+                 updateDatasets={updateDatasets}
+                 />
         </div>
     )
 }
