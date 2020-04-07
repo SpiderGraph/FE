@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 // styles
 import './styles.scss'
 // components
@@ -15,25 +15,28 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
     const [arrLegs, setArrLegs] = useState(legs)
     const [datasets, setDatasets] = useState<DataSet[]>([])
     const [pointFields, setPointFields] = useState(2)
+    const [currentLeg, setCurrentLeg] = useState<number>()
 
-
-    function handleGraphName(graphName: string){
-        setName(graphName)
+    function handleLeg(leg: number){
+        setCurrentLeg(leg)
     }
-
-    function handleLegs(graphLegs: Leg[]){
-        setArrLegs(graphLegs)
-    }
-
-    function handleDatasets(dataset: DataSet){
-        setDatasets([...datasets, dataset])
-    }
-
+    useEffect(() =>{
+        if(typeof currentLeg === 'number' && arrLegs[currentLeg].points.length > 0){
+            setPointFields(arrLegs[currentLeg].points.length)
+        }
+    }, [currentLeg])
 
     return (
         <div className="dispatch-graph">   
-            <Graph graphName={name} legs={arrLegs} dataSets={datasets}/>       
+            <Graph 
+                graphName={name}
+                legs={arrLegs} 
+                dataSets={datasets} 
+                handleLeg={handleLeg} 
+            />       
             <GraphForm
+                setCurrentLeg={setCurrentLeg}
+                currentLeg={currentLeg}
                 graphName={name}
                 pointFields={pointFields}
                 setPointFields={setPointFields}

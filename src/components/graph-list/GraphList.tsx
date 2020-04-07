@@ -4,9 +4,16 @@ import './styles.scss'
 import {Props as FormProps}  from '../graph-forms/LegForm';
 
 type Props = {
+    pointFields: number,
+    setPointFields(n:number):void;
+
     legs: Leg[],
+    setLegs(graphLegs: Leg[]): void,
+
     datasets: DataSet[],
-} & FormProps
+    updateDatasets(dataset: DataSet[]): void,
+
+} 
 
 const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateDatasets}) => {
     const [acc, setAcc] = useState({acc1: true, acc2: true})

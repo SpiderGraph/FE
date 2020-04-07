@@ -7,7 +7,7 @@ import '../form-parts/form-container.scss'
 import * as Yup from 'yup';
 import {withFormik, Form, Field, FormikProps} from 'formik'
 import LegForm, {Props as LegProps}  from './LegForm';
-import { Graph as GraphType} from '../../store/graph/types';
+import { Graph as GraphType, Leg as LegType} from '../../store/graph/types';
 // redux
 import {connect, ConnectedProps} from 'react-redux'
 import {thunkCreateGraph as createGraph} from '../../store/graph/thunk'
@@ -42,6 +42,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
         updateDatasets,
         errors,
         touched,
+        currentLeg,
+        setCurrentLeg
     } = props
 
     return (
@@ -58,6 +60,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                         /> 
                     </label>
                     <LegForm 
+                    setCurrentLeg={setCurrentLeg}
+                    currentLeg={currentLeg}
                     pointFields={pointFields}
                     setPointFields={setPointFields}
                     legs={legs}
