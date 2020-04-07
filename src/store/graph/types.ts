@@ -1,25 +1,27 @@
 
 // Graph`s state
 export type GraphState = {
-    graphs: Graph[]
+    graphs: Graph[],
+    loading: boolean,
+    error: string,
 }
 
 export type Graph = {
-    graphId?: number,
+    _id?: number,
     graphName: string,
     dataSets?: DataSet[],
     legs: Leg[]
 }
 
 export type Leg = {
-    legId?: number,
+    _id?: number,
     legName: string,
     rotation: number | undefined,
     points: Point[]
 }
 
 export type DataSet = {
-    dataSetId?: number,
+    _id?: number,
     radius?: number[],
     dataSetName: string,
     points: string,
@@ -27,16 +29,21 @@ export type DataSet = {
 }
 
 export type Point = {
-    pointId?: number,
+    _id?: number,
     pointName: string,
-    completed?: boolean,
 }
 
 // Types for graph component
 
 export enum ActionTypes {
-    GET_GRAPHS = 'GET_GRAPHS',
-    CREATE_GRAPH = 'CREATE_GRAPH',
+    GET_GRAPHS_START = 'GET_GRAPHS_START',
+    GET_GRAPHS_SUCCESS = 'GET_GRAPHS_SUCCESS',
+    GET_GRAPHS_FAILURE = 'GER_GRAPHS_FAILURE',
+
+    CREATE_GRAPH_START = 'CREATE_GRAPH_START',
+    CREATE_GRAPH_SUCCESS = 'CREATE_GRAPH_SUCCESS',
+    CREATE_GRAPH_FAILURE = 'CREATE_GRAPH_FAILURE',
+
     DELTE_GRAPH = 'DELETE_GRAPH',
 
     CREATE_LEG = 'CREATE_LEG',
@@ -46,21 +53,47 @@ export enum ActionTypes {
     DELETE_POINT = 'DELETE_POINT',
 }
 
-export type GetGraphsAction = {
-    type: ActionTypes.GET_GRAPHS,
+// GRAPH RETRIEVAL 
+export type GetGraphsStart = {
+    type: ActionTypes.GET_GRAPHS_START,
 }
 
-export type CreateGraphAction = {
-    type: ActionTypes.CREATE_GRAPH,
-    payload: Graph
+export type GetGraphsSuccess = {
+    type: ActionTypes.GET_GRAPHS_SUCCESS,
+    payload: Graph[]
 }
 
+export type GetGraphsFailure = {
+    type: ActionTypes.GET_GRAPHS_FAILURE,
+    payload: string
+}
+
+// GRAPH CREATION
+export type CreateGraphStart = {
+    type: ActionTypes.CREATE_GRAPH_START,
+}
+
+export type CreateGraphSuccess = {
+    type: ActionTypes.CREATE_GRAPH_SUCCESS,
+}
+
+export type CreateGraphFailure = {
+    type: ActionTypes.CREATE_GRAPH_FAILURE,
+    payload: string,
+}
+
+// GRAPH DELETION
 export type DeleteGraphAction = {
     type: ActionTypes.DELTE_GRAPH,
     payload: number
 }
 
 export type GraphActionTypes = 
-    | GetGraphsAction
-    | CreateGraphAction 
+    | GetGraphsStart
+    | GetGraphsSuccess
+    | GetGraphsFailure
+
+    | CreateGraphStart
+    | CreateGraphSuccess
+    | CreateGraphFailure
     | DeleteGraphAction

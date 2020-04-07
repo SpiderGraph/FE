@@ -33,7 +33,7 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
     return (
         <div className="dispatch-graph">   
             <Graph graphName={name} legs={arrLegs} dataSets={datasets}/>       
-             <GraphForm
+            <GraphForm
                 graphName={name}
                 pointFields={pointFields}
                 setPointFields={setPointFields}
@@ -41,7 +41,7 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
                 setLegs={setArrLegs}
                 datasets={datasets}
                 updateDatasets={setDatasets}
-             />
+            />
         </div>
     )
 }
