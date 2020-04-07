@@ -35,7 +35,6 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
                     <Graph graphName={graph.graphName}
                         allowDataset={false}
                         legs={graph.legs}
-            
                         dataSets={graph.dataSets}/>}>
                 </Card>
             )}

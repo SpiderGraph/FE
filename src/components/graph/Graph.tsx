@@ -10,15 +10,27 @@ import Spider from '../svg/Spider'
 
 type Props = GraphType & {
     allowDataset?: Boolean,
+    handleLeg?: (leg: number) => void
 }
 export let GRAPH_WIDTH = 650
 export let GRAPH_HEIGTH = 650
 
-const Graph: FunctionComponent<Props> = ({graphName, legs, dataSets, allowDataset = true}) => {
+const Graph: FunctionComponent<Props> = ({
+    graphName,
+    legs, 
+    dataSets, 
+    allowDataset = true,
+    handleLeg
+    }) => {
     const [name, setName] = useState(graphName)
     let graphWidth =  GRAPH_WIDTH
     let graphHeight = GRAPH_HEIGTH
  
+    function setLeg(leg: number):void{
+        if(handleLeg){
+            handleLeg(leg)
+        }
+    }
   
     return (
         <div className="graph">
@@ -47,12 +59,15 @@ const Graph: FunctionComponent<Props> = ({graphName, legs, dataSets, allowDatase
 
                 <g>
                 {legs.map((leg, index) =>
-                    <Leg key={index} 
-                        rotation={leg.rotation}
-                        legName={leg.legName}
-                        points={leg.points} 
-                        graphParams={{width: graphWidth, height: graphHeight}}
-                    />
+                <a style={{display: 'block'}} onClick={() => setLeg(index)} >
+                     <Leg key={index} 
+                            rotation={leg.rotation}
+                            legName={leg.legName}
+                            points={leg.points} 
+                            graphParams={{width: graphWidth, height: graphHeight}}  
+                        />
+                </a>
+                       
                 )}
                 </g>
                 

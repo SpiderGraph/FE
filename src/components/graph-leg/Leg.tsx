@@ -14,6 +14,7 @@ type Props = LegType & {
 
 const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legName}) => {
     const [name, setName] = useState('')
+    const [hover, setHover] = useState('#e0dddd')
     let xAxis = graphParams.width / 2
     let yAxis = graphParams.height / 2
 
@@ -22,13 +23,18 @@ const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legN
     let position = xAxis // position for points, the bigger is number the closer is a point
 
     return (
-        <g transform={`rotate(${rotation}  ${xAxis} ${yAxis})`} style={{transition: `all 0.5s ease-out`}}>
+        <g transform={`rotate(${rotation}  ${xAxis} ${yAxis})`} 
+            style={{transition: `all 0.5s ease-out`}}
+            onMouseOver={() => setHover('coral')}
+            onMouseLeave={() => setHover('white')}
+        >
             {points.map((item, index) => {
                 position -= 60 // decrement the position to ship point
             return(
                 <g>
                     <line x1={xAxis} y1={position} x2={xAxis} y2={position + step - radius} 
-                        stroke="#C4C4C4" strokeWidth="2" strokeLinecap="round" 
+                        strokeLinecap="round"
+                        style={{strokeWidth: 2, stroke: hover, cursor: 'pointer'}}
                     />
                     <text x={xAxis + 5} y={position - 10} transform={`rotate(-${rotation} ${xAxis} ${position})`} className="svg-font">
                         {item.pointName.length > 0 ? item.pointName : 'Point'}

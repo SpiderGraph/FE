@@ -1,0 +1,29 @@
+@mixin chip {
+    border-radius: 20px;
+    padding: 5px;
+    margin-right: 5px;
+    font-size: .5rem;
+    font-weight: bold;
+}
+
+.states-container{
+    color: white;
+    margin: 15px 0 10px 0;
+    text-transform: uppercase;
+    
+    .update-state{
+        @include chip();
+        background: rgba(48, 113, 199, 0.863);
+        &:hover, &:active{
+            background: rgba(25, 88, 172, 0.911);
+        }
+
+    }
+    .create-state{
+        @include chip();
+        background: rgba(211, 20, 100, 0.719);
+        &:hover, &:active{
+            background: rgba(155, 15, 73, 0.932);
+        }
+    }
+}
