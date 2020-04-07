@@ -9,7 +9,7 @@ $breakpoint-tablet: 800px;
 @media (min-width: $breakpoint-tablet){
   .dispatch-graph{
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
   }
 }
 

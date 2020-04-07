@@ -12,6 +12,7 @@ import { Graph as GraphType} from '../../store/graph/types';
 import {connect, ConnectedProps} from 'react-redux'
 import {thunkCreateGraph as createGraph} from '../../store/graph/thunk'
 import DatasetForm from './DatasetForm';
+import GraphList from '../graph-list/GraphList';
 
 const mapState = null
 
@@ -74,6 +75,7 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                     </button>
 
                 </Form>
+                <GraphList legs={legs} datasets={datasets}/>
         </div>
     )
 }
