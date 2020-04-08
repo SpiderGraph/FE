@@ -44,13 +44,13 @@ export enum ActionTypes {
     CREATE_GRAPH_SUCCESS = 'CREATE_GRAPH_SUCCESS',
     CREATE_GRAPH_FAILURE = 'CREATE_GRAPH_FAILURE',
 
-    DELTE_GRAPH = 'DELETE_GRAPH',
+    DELETE_GRAPH_START = 'DELETE_GRAPH_START',
+    DELETE_GRAPH_SUCCESS = 'DELETE_GRAPH_SUCCESS',
+    DELETE_GRAPH_FAILURE = 'DELETE_GRAPH_FAILURE',
 
-    CREATE_LEG = 'CREATE_LEG',
-    DELETE_LEG = 'DELETE_LEG',
-
-    CREATE_POINT = 'CREATE_POINT',
-    DELETE_POINT = 'DELETE_POINT',
+    UPDATE_GRAPH_START = 'UPDATE_GRAPH_START',
+    UPDATE_GRAPH_SUCCESS = 'UPDATE_GRAPH_SUCCESS',
+    UPDATE_GRAPH_FAILURE = 'UPDATE_GRAPH_FAILURE'
 }
 
 // GRAPH RETRIEVAL 
@@ -83,9 +83,33 @@ export type CreateGraphFailure = {
 }
 
 // GRAPH DELETION
-export type DeleteGraphAction = {
-    type: ActionTypes.DELTE_GRAPH,
-    payload: number
+export type DeleteGraphStart = {
+    type: ActionTypes.DELETE_GRAPH_START,
+}
+
+export type DeleteGraphSuccess = {
+    type: ActionTypes.DELETE_GRAPH_SUCCESS,
+    payload: string,
+}
+
+export type DeleleGraphFailure = {
+    type: ActionTypes.DELETE_GRAPH_FAILURE,
+    payload: string
+}
+
+// GRAPH UPDATE
+
+export type UpdateGraphStart = {
+    type: ActionTypes.UPDATE_GRAPH_START,
+}
+
+export type UpdateGraphSuccess = {
+    type: ActionTypes.UPDATE_GRAPH_SUCCESS
+}
+
+export type UpdateGraphFailure = {
+    type: ActionTypes.UPDATE_GRAPH_FAILURE,
+    payload: string,
 }
 
 export type GraphActionTypes = 
@@ -96,4 +120,11 @@ export type GraphActionTypes =
     | CreateGraphStart
     | CreateGraphSuccess
     | CreateGraphFailure
-    | DeleteGraphAction
+
+    | DeleteGraphStart
+    | DeleteGraphSuccess
+    | DeleleGraphFailure
+
+    | UpdateGraphStart
+    | UpdateGraphSuccess
+    | UpdateGraphFailure

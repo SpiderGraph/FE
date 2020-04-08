@@ -42,3 +42,46 @@ export function getGraphsFailure(err: string): GraphActionTypes{
         payload: err
     }
 }
+
+// GRAPH DELETEION
+
+export function deleteGraphStart(): GraphActionTypes{
+    return{
+        type: ActionTypes.DELETE_GRAPH_START,
+    }
+}
+
+export function deleteGraphSuccess(id: string): GraphActionTypes{
+    return{
+        type: ActionTypes.DELETE_GRAPH_SUCCESS,
+        payload: id
+    }
+}
+
+export function deleteGraphFailure(err: string): GraphActionTypes{
+    return{
+        type: ActionTypes.DELETE_GRAPH_FAILURE,
+        payload: err
+    }
+}
+
+// UPDATE GRAPH
+
+export function updateGraphStart(): GraphActionTypes {
+    return{
+        type: ActionTypes.UPDATE_GRAPH_START
+    }
+}
+
+export function updateGraphSuccess(): GraphActionTypes{
+    return{
+        type: ActionTypes.UPDATE_GRAPH_SUCCESS  
+    }
+}
+
+export function updateGraphFailure(err: string): GraphActionTypes{
+    return{
+        type: ActionTypes.UPDATE_GRAPH_FAILURE,
+        payload: err
+    }
+}
