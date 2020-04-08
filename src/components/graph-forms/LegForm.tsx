@@ -50,7 +50,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
         currentLeg,
         setFieldValue, 
         resetForm,
-        legs
+        legs,
+        setCurrentLeg
     }) => {
 
     useEffect(() => {
@@ -62,11 +63,25 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
         }
     }, [currentLeg])
 
+    function createState(){
+        setCurrentLeg(undefined)
+        setPointFields(2)
+    }
+
     return (
         <>
         <div className="states-container">
-            <span className="update-state">Update state</span>
-            <span className="create-state">Create state</span>
+            <span className={`
+                update-state 
+                ${typeof currentLeg === 'number' ? " update-state-active " : " btn-dis"}
+            `}>
+                Update state
+            </span>
+            <span className={`create-state ${typeof currentLeg === 'undefined' ?  " btn-dis" : ""}`}
+                onClick={createState}
+            >
+                Create state
+            </span>
         </div>
     
         <Form className="center">
