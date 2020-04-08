@@ -18,6 +18,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
         case ActionTypes.CREATE_GRAPH_SUCCESS:
             return{
                 ...state,
+                error: '',
                 loading: false
             }
         case ActionTypes.CREATE_GRAPH_FAILURE:
@@ -35,6 +36,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
         case ActionTypes.GET_GRAPHS_SUCCESS:
             return{
                 ...state,
+                error: '',
                 graphs: action.payload,
                 loading: false
             }
@@ -42,6 +44,43 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
             return {
                 ...state,
                 loading: false,
+                error: action.payload
+            }
+        // GRAPH DELETION
+        case ActionTypes.DELETE_GRAPH_FAILURE: 
+            return {
+                ...state,
+                loading: true,
+            }
+        case ActionTypes.DELETE_GRAPH_SUCCESS:
+            let deleteGraph = state.graphs.filter(graph => graph._id !== action.payload)
+            return {
+                ...state,
+                graphs: deleteGraph,
+                loading: false,
+                error: ''
+            }
+        case ActionTypes.DELETE_GRAPH_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        // GRAPH UPDATE
+        case ActionTypes.UPDATE_GRAPH_START:
+            return{
+                ...state,
+                loading: true,
+            }
+        case ActionTypes.UPDATE_GRAPH_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                error: '',
+            }
+        case ActionTypes.UPDATE_GRAPH_FAILURE:
+            return{
+                ...state,
                 error: action.payload
             }
         default: 

@@ -2,14 +2,33 @@ import React, { FunctionComponent } from 'react'
 import {RouteComponentProps, withRouter} from 'react-router-dom'
 // styles
 import './styles.scss'
+// redux
+import {connect, ConnectedProps} from 'react-redux'
+import { thunkDeleteGraph } from '../../store/graph/thunk'
+
+const mapState = null
+const mapDispatch = {
+    thunkDeleteGraph
+}
+
+const connector = connect(mapState, mapDispatch)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 type Props = {
     title: string,
     content: React.ReactNode,
     id?: string,
-}
+} & PropsFromRedux
 
-const Card:FunctionComponent<Props & RouteComponentProps> = ({id, content, title, history}) => {
+const Card:FunctionComponent<Props & RouteComponentProps> = ({
+        id, 
+        content, 
+        title, 
+        history,
+        thunkDeleteGraph
+    }) => {
+
     return(
         <div className="card">
            
@@ -22,7 +41,7 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({id, content, title
             <div className="actions">
                 <h1 className="title">{title}</h1>
                 <div className="action-btns">
-                    <span>Delete</span>
+                    <span onClick={() => thunkDeleteGraph(id || '')}>Delete</span>
                     <span onClick={() => history.push(`/edit-graph${id}`)}>Edit</span>
                 </div>
             </div>
@@ -30,4 +49,4 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({id, content, title
     )
 }
 
-export default withRouter(Card)
+export default withRouter(connector(Card))

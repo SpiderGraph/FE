@@ -10,7 +10,7 @@ import LegForm, {Props as LegProps}  from './LegForm';
 import { Graph as GraphType, Leg as LegType} from '../../store/graph/types';
 // redux
 import {connect, ConnectedProps} from 'react-redux'
-import {thunkCreateGraph as createGraph} from '../../store/graph/thunk'
+import {thunkCreateGraph, thunkUpdateGraph} from '../../store/graph/thunk'
 // components
 import DatasetForm from './DatasetForm';
 import GraphList from '../graph-list/GraphList';
@@ -19,7 +19,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom'
 
 const mapState = null
 
-const mapDispatch = {createGraph}
+const mapDispatch = {thunkCreateGraph, thunkUpdateGraph}
 
 const connector = connect(mapState, mapDispatch)
 
@@ -33,10 +33,10 @@ type ParentProps = {
     graphName: string;
 }  & LegProps
 
-type Props = PropsFromRedux & ParentProps 
+type Props = PropsFromRedux & ParentProps & RouteComponentProps<TParams>
 type TParams =  { id: string };
 
-const InnerForm:FunctionComponent<Props & FormikProps<FormValues> & RouteComponentProps<TParams>>  = (props) => {
+const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) => {
     const {
         pointFields,
         setPointFields,
@@ -109,6 +109,8 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         graphName: Yup.string().required('Please enter graph name')
     }),
     handleSubmit: (values, {props}) => {
+        
+        let id = props.match.params.id
         console.log('props' , props) 
         // form a graph
         let newGraph: GraphType = {
@@ -116,13 +118,14 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
             legs: props.legs,
             dataSets: props.datasets
         }
-        if(props.initialGraphName && props.initialGraphName.length > 0){
+        if(id){
             // update graph
+            props.thunkUpdateGraph(id, newGraph)
         }else{
-            props.createGraph(newGraph)
+            props.thunkCreateGraph(newGraph)
         }
        
     }
-})(withRouter(InnerForm))
+})(InnerForm)
 
-export default connector(GraphForm)
+export default withRouter(connector(GraphForm))
