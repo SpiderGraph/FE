@@ -5,7 +5,6 @@ import {connect, ConnectedProps} from 'react-redux'
 // components
 import Graph from '../graph/Graph'
 import Card from '../card/Card'
-import { findByLabelText } from '@testing-library/react'
 import { thunkGetGraphs } from '../../store/graph/thunk'
 
 const mapState = (state: RootState) => ({
@@ -30,6 +29,7 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
         <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '100px'}}>
             {graphs.map(graph =>
                 <Card 
+                id={graph._id}
                 title={graph.graphName}
                 content={
                     <Graph graphName={graph.graphName}

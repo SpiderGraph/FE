@@ -6,11 +6,10 @@ import './styles.scss'
 type Props = {
     title: string,
     content: React.ReactNode,
+    id?: string,
 }
 
-
-
-const Card:FunctionComponent<Props & RouteComponentProps> = ({content, title, history}) => {
+const Card:FunctionComponent<Props & RouteComponentProps> = ({id, content, title, history}) => {
     return(
         <div className="card">
            
@@ -24,7 +23,7 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({content, title, hi
                 <h1 className="title">{title}</h1>
                 <div className="action-btns">
                     <span>Delete</span>
-                    <span onClick={() => history.push(`/edit-graph${2}`)}>Edit</span>
+                    <span onClick={() => history.push(`/edit-graph${id}`)}>Edit</span>
                 </div>
             </div>
         </div>

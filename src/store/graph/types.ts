@@ -7,21 +7,21 @@ export type GraphState = {
 }
 
 export type Graph = {
-    _id?: number,
+    _id?: string,
     graphName: string,
     dataSets?: DataSet[],
     legs: Leg[]
 }
 
 export type Leg = {
-    _id?: number,
+    _id?: string,
     legName: string,
     rotation: number | undefined,
     points: Point[]
 }
 
 export type DataSet = {
-    _id?: number,
+    _id?: string,
     radius?: number[],
     dataSetName: string,
     points: string,
@@ -29,7 +29,7 @@ export type DataSet = {
 }
 
 export type Point = {
-    _id?: number,
+    _id?: string,
     pointName: string,
 }
 

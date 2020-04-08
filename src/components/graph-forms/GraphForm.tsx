@@ -11,8 +11,11 @@ import { Graph as GraphType, Leg as LegType} from '../../store/graph/types';
 // redux
 import {connect, ConnectedProps} from 'react-redux'
 import {thunkCreateGraph as createGraph} from '../../store/graph/thunk'
+// components
 import DatasetForm from './DatasetForm';
 import GraphList from '../graph-list/GraphList';
+// routing
+import {RouteComponentProps, withRouter} from 'react-router-dom'
 
 const mapState = null
 
@@ -31,8 +34,9 @@ type ParentProps = {
 }  & LegProps
 
 type Props = PropsFromRedux & ParentProps 
+type TParams =  { id: string };
 
-const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) => {
+const InnerForm:FunctionComponent<Props & FormikProps<FormValues> & RouteComponentProps<TParams>>  = (props) => {
     const {
         pointFields,
         setPointFields,
@@ -43,9 +47,10 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
         errors,
         touched,
         currentLeg,
-        setCurrentLeg
+        setCurrentLeg,
+        match
     } = props
-
+    let id = match.params.id
     return (
         <div className="form-container">
             <h1 className="title">Create a new spider graph</h1>
@@ -59,15 +64,15 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                         className={`field-metal ${touched.graphName && errors.graphName && ' field-error'}`}
                         /> 
                     </label>
-                    <LegForm 
-                    setCurrentLeg={setCurrentLeg}
-                    currentLeg={currentLeg}
-                    pointFields={pointFields}
-                    setPointFields={setPointFields}
-                    legs={legs}
-                    setLegs={setLegs}
-                    datasets={datasets}
-                    updateDatasets={updateDatasets}
+                    <LegForm
+                        setCurrentLeg={setCurrentLeg}
+                        currentLeg={currentLeg}
+                        pointFields={pointFields}
+                        setPointFields={setPointFields}
+                        legs={legs}
+                        setLegs={setLegs}
+                        datasets={datasets}
+                        updateDatasets={updateDatasets}
                     />
                     <DatasetForm 
                         legs={legs}
@@ -75,17 +80,17 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                         updateDatasets={updateDatasets}
                     />
                     <button className={`button-metal submit-block ${legs.length < 3 && ' btn-dis '}`} type="submit">
-                        CREATE GRAPH
+                        {`${id ? 'UPDATE GRAPH' : 'CREATE GRAPH'}`}
                     </button>
 
                 </Form>
                 <GraphList 
-                 pointFields={pointFields}
-                 setPointFields={setPointFields}
-                 legs={legs}
-                 setLegs={setLegs}
-                 datasets={datasets}
-                 updateDatasets={updateDatasets}
+                    pointFields={pointFields}
+                    setPointFields={setPointFields}
+                    legs={legs}
+                    setLegs={setLegs}
+                    datasets={datasets}
+                    updateDatasets={updateDatasets}
                  />
         </div>
     )
@@ -93,7 +98,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
 
 type MyFormProps ={
     initialGraphName?: string
-} & Props
+} & Props 
+
 
 const GraphForm = withFormik<MyFormProps, FormValues>({
     mapPropsToValues: props => ({
@@ -103,14 +109,20 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         graphName: Yup.string().required('Please enter graph name')
     }),
     handleSubmit: (values, {props}) => {
+        console.log('props' , props) 
         // form a graph
         let newGraph: GraphType = {
             graphName: values.graphName,
             legs: props.legs,
             dataSets: props.datasets
         }
-        props.createGraph(newGraph)
+        if(props.initialGraphName && props.initialGraphName.length > 0){
+            // update graph
+        }else{
+            props.createGraph(newGraph)
+        }
+       
     }
-})(InnerForm)
+})(withRouter(InnerForm))
 
 export default connector(GraphForm)
