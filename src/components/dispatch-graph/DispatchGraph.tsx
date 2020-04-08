@@ -10,10 +10,10 @@ import { Graph as GraphType, Leg, DataSet} from '../../store/graph/types'
 
 type Props = GraphType
 
-const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
+const DispatchGraph: FunctionComponent<Props> = ({graphName, legs, dataSets}) => {
     const [name, setName] = useState(graphName)
     const [arrLegs, setArrLegs] = useState(legs)
-    const [datasets, setDatasets] = useState<DataSet[]>([])
+    const [datasets, setDatasets] = useState<DataSet[]>(dataSets || [])
     const [pointFields, setPointFields] = useState(2)
     const [currentLeg, setCurrentLeg] = useState<number>()
 
@@ -35,6 +35,7 @@ const DispatchGraph: FunctionComponent<Props> = ({graphName, legs}) => {
                 handleLeg={handleLeg} 
             />       
             <GraphForm
+                initialGraphName={name}
                 setCurrentLeg={setCurrentLeg}
                 currentLeg={currentLeg}
                 graphName={name}

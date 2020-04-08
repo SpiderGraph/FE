@@ -46,6 +46,7 @@
         .action-btns{
             display: flex;
             justify-content: flex-end;
+            cursor: pointer;
            span{
             margin: 0 15px;
             &::after {
