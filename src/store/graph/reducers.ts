@@ -18,6 +18,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
         case ActionTypes.CREATE_GRAPH_SUCCESS:
             return{
                 ...state,
+                graphs: [...state.graphs, action.payload],
                 error: '',
                 loading: false
             }
@@ -73,8 +74,16 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
                 loading: true,
             }
         case ActionTypes.UPDATE_GRAPH_SUCCESS:
+            let updateGraph = state.graphs.map(graph => {
+                if(graph._id === action.payload.id) {
+                    return action.payload.body
+                }else{
+                    return graph
+                }
+            })
             return{
                 ...state,
+                graphs: updateGraph,
                 loading: false,
                 error: '',
             }

@@ -26,14 +26,15 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
     }, [])
 
     return (
-        <div style={{display: 'flex', flexWrap: 'wrap', marginTop: '100px'}}>
-            {graphs.map(graph =>
+        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '100px'}}>
+            {graphs.map((graph, index) =>
                 <Card 
+                key={index}
                 id={graph._id}
                 title={graph.graphName}
                 content={
                     <Graph graphName={graph.graphName}
-                        allowDataset={false}
+                        signleView={false}
                         legs={graph.legs}
                         dataSets={graph.dataSets}/>}>
                 </Card>

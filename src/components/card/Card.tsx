@@ -42,7 +42,7 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({
                 <h1 className="title">{title}</h1>
                 <div className="action-btns">
                     <span onClick={() => thunkDeleteGraph(id || '')}>Delete</span>
-                    <span onClick={() => history.push(`/edit-graph${id}`)}>Edit</span>
+                    <span onClick={() => history.push(`/edit-graph${id || ''}`)}>Edit</span>
                 </div>
             </div>
         </div>

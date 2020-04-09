@@ -9,11 +9,11 @@ type Props = LegType & {
     graphParams: {
         width: number,
         height: number,
-    }
+    },
+    signleView: boolean
 }
 
-const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legName}) => {
-    const [name, setName] = useState('')
+const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legName, signleView}) => {
     const [hover, setHover] = useState('#e0dddd')
     let xAxis = graphParams.width / 2
     let yAxis = graphParams.height / 2
@@ -25,23 +25,23 @@ const Leg: FunctionComponent<Props> = ({rotation = 30, points, graphParams, legN
     return (
         <g transform={`rotate(${rotation}  ${xAxis} ${yAxis})`} 
             style={{transition: `all 0.5s ease-out`}}
-            onMouseOver={() => setHover('coral')}
-            onMouseLeave={() => setHover('white')}
+            onMouseOver={() => signleView && setHover('coral')}
+            onMouseLeave={() => signleView && setHover('white')}
         >
             {points.map((item, index) => {
                 position -= 60 // decrement the position to ship point
-            return(
-                <g>
-                    <line x1={xAxis} y1={position} x2={xAxis} y2={position + step - radius} 
-                        strokeLinecap="round"
-                        style={{strokeWidth: 2, stroke: hover, cursor: 'pointer'}}
-                    />
-                    <text x={xAxis + 5} y={position - 10} transform={`rotate(-${rotation} ${xAxis} ${position})`} className="svg-font">
-                        {item.pointName.length > 0 ? item.pointName : 'Point'}
-                    </text>
-                    <circle cx={xAxis} cy={position} r={radius} fill="#C4C4C4" /> 
-                </g>
-            )
+                return(
+                    <g key={index}>
+                        <line x1={xAxis} y1={position} x2={xAxis} y2={position + step - radius} 
+                            strokeLinecap="round"
+                            style={{strokeWidth: 2, stroke: hover, cursor: 'pointer'}}
+                        />
+                        <text x={xAxis + 5} y={position - 10} transform={`rotate(-${rotation} ${xAxis} ${position})`} className="svg-font">
+                            {item.pointName.length > 0 ? item.pointName : 'Point'}
+                        </text>
+                        <circle cx={xAxis} cy={position} r={radius} fill="#C4C4C4" /> 
+                    </g>
+                )
            })}
            <text x={xAxis - 20} y={position - 50} transform={`rotate(-${rotation} ${xAxis - 5} ${position - 50})`} className="svg-title">
                 {legName}

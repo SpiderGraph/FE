@@ -9,7 +9,7 @@ import Spider from '../svg/Spider'
 
 
 type Props = GraphType & {
-    allowDataset?: Boolean,
+    signleView?: boolean,
     handleLeg?: (leg: number) => void
 }
 export let GRAPH_WIDTH = 650
@@ -19,7 +19,7 @@ const Graph: FunctionComponent<Props> = ({
     graphName,
     legs, 
     dataSets, 
-    allowDataset = true,
+    signleView = true,
     handleLeg
     }) => {
     const [name, setName] = useState(graphName)
@@ -33,18 +33,17 @@ const Graph: FunctionComponent<Props> = ({
     }
   
     return (
-        <div className="graph">
-          {/* <h1>{name}</h1> */} 
+        <div className={`graph ${signleView ? '' : 'point'}`}>
 
             {(legs.length === 0) && 
                 <p className="empty-graph">The place for your spider graph!</p>
             }
 
             {/* dataset list */}
-            {(allowDataset === true)  && 
+            {(signleView === true)  && 
                 <div style={{margin: 'auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-                    {dataSets && dataSets.length > 0 && dataSets.map(dataset => {
-                        return <span style={{color: 'white', borderBottom: `5px solid ${dataset.color}`, margin: '0px 5px'}}>{dataset.dataSetName}</span>
+                    {dataSets && dataSets.length > 0 && dataSets.map((dataset, index) => {
+                        return <span key={index} style={{color: 'white', borderBottom: `5px solid ${dataset.color}`, margin: '0px 5px'}}>{dataset.dataSetName}</span>
                     })}
                 </div>
              }  
@@ -52,15 +51,16 @@ const Graph: FunctionComponent<Props> = ({
             <svg  viewBox={`0 0 ${graphWidth} ${graphHeight}`}>
                 
                 {dataSets && dataSets.length  > 0 && 
-                    dataSets.map(dataset => {
-                    return <polygon points={dataset.points} fill={dataset.color} opacity="0.3"></polygon>
+                    dataSets.map((dataset, index) => {
+                    return <polygon key={index} points={dataset.points} fill={dataset.color} opacity="0.3"></polygon>
                     })
                 }
 
                 <g>
                 {legs.map((leg, index) =>
-                <a style={{display: 'block'}} onClick={() => setLeg(index)} >
-                     <Leg key={index} 
+                <a   key={index} style={{display: 'block'}} onClick={() => setLeg(index)}>
+                     <Leg
+                            signleView={signleView}
                             rotation={leg.rotation}
                             legName={leg.legName}
                             points={leg.points} 

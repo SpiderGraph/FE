@@ -8,7 +8,7 @@ import axios from 'axios'
 export const thunkCreateGraph = (graph: Graph): AppThunk => dispatch => {
     dispatch(createGraphStart())
     axios.post(`https://spider-graph-be.herokuapp.com/graphs`, graph)
-    .then(res => dispatch(createGraphSuccess()))
+    .then(res => dispatch(createGraphSuccess(graph)))
     .catch(err => dispatch(createGraphFailure(err)))
 }
 
@@ -35,6 +35,6 @@ export const thunkDeleteGraph = (id: string): AppThunk => dispatch => {
 export const thunkUpdateGraph = (id: string, graph: Graph): AppThunk => dispatch => {
     dispatch(updateGraphStart)
     axios.put(`https://spider-graph-be.herokuapp.com/graphs/${id}`, graph)
-    .then(res => dispatch(updateGraphSuccess))
+    .then(res => dispatch(updateGraphSuccess(id, graph)))
     .catch(err => dispatch(updateGraphFailure(err)))
 }
