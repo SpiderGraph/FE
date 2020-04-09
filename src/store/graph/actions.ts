@@ -9,9 +9,10 @@ export function createGraphStart(): GraphActionTypes{
     }
 }
 
-export function createGraphSuccess(): GraphActionTypes{
+export function createGraphSuccess(graph: Graph): GraphActionTypes{
     return{
         type: ActionTypes.CREATE_GRAPH_SUCCESS,
+        payload: graph
     }
 }
 
@@ -73,9 +74,13 @@ export function updateGraphStart(): GraphActionTypes {
     }
 }
 
-export function updateGraphSuccess(): GraphActionTypes{
+export function updateGraphSuccess(id: string, graph: Graph): GraphActionTypes{
     return{
-        type: ActionTypes.UPDATE_GRAPH_SUCCESS  
+        type: ActionTypes.UPDATE_GRAPH_SUCCESS,
+        payload: {
+            id: id,
+            body: graph
+        }
     }
 }
 

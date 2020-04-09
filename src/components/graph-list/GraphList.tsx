@@ -2,6 +2,7 @@ import React, {FunctionComponent, useState} from 'react'
 import { Leg, DataSet } from '../../store/graph/types'
 import './styles.scss'
 import {Props as FormProps}  from '../graph-forms/LegForm';
+import { generatePolygon } from '../graph-forms/dataSet';
 
 type Props = {
     pointFields: number,
@@ -33,6 +34,23 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
         setLegs(updatedLegs) 
         if(updatedLegs.length < 3){
             updateDatasets([])
+        }else{
+            // modify radius and delete the item equals to leg index
+            let updatedDatasets:DataSet[] = datasets.map(ds => {
+                if(ds.radius && ds.radius.length > index){
+                    // radius in dataset holds coords of legs, when deleting a leg appropriate item in radius should be removed
+                    // delete element by the same leg index to change dataset
+                    ds.radius.splice(index, 1)
+                }
+                    return ds   
+            })
+            
+             // update all datasets when adding a leg
+             const generateDatasets = (datasets: DataSet[], legs:Leg[]):DataSet[] => {
+                return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
+            }
+            console.log('UPDATED DS ', updatedDatasets)
+            updateDatasets(generateDatasets(updatedDatasets, updatedLegs)) 
         }
     }
 
@@ -66,7 +84,7 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
                     <div className={`content ${acc['acc1'] ? " content-open" : " "}`}>
                         <ul  className={`content-text ${acc['acc1'] ? " content-text-open" : " "}`}>
                         {legs.map((leg, legIndex) => 
-                            <li>
+                            <li key={legIndex}>
                                 <div className="line">
                                     <span>{(legIndex + 1) + '.  ' + leg.legName}</span>
                                     <span className="delete" onClick={() => deleteLeg(legIndex)}>—</span>
@@ -74,7 +92,7 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
                                 
                                 <ul >
                                     {leg.points.map((point, pointIndex) => 
-                                        <li className="line shift">
+                                        <li key={pointIndex} className="line shift">
                                             <span>{(pointIndex + 1) + ')  ' + point.pointName}</span>
                                             <span className="delete" onClick={() => deletePoint(legIndex, pointIndex)}>—</span>
                                         </li>
@@ -98,7 +116,7 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
                         <div className={`content ${acc['acc2'] ? " content-open" : " "}`}>
                             <ul className={`content-text ${acc['acc2'] ? " content-text-open" : " "}`}>
                             {datasets.map((dataset, index )=> 
-                                <li className="line">
+                                <li key={index} className="line">
                                     <span>{`${index + 1}.  ${dataset.dataSetName}`}</span>
                                     <span className="delete" onClick={() => deleteDataset(index)}>—</span>
                                 </li>

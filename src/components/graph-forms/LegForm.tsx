@@ -55,7 +55,6 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
     }) => {
 
     useEffect(() => {
-        console.log('curent leg ', currentLeg)
         resetForm()
         if(typeof currentLeg === 'number' && legs[currentLeg].legName.length > 0){
             setFieldValue('legName', legs[currentLeg].legName)
@@ -96,8 +95,9 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
             </label>
             {/* point fields */}
             <div className="flex-wrap">
-                {range(pointFields).map(point => 
+                {range(pointFields).map((point, index) => 
                     <label 
+                        key={index}
                         htmlFor={`point-name`+ (point+1)} 
                         className="label"
                         style={{display: pointFields >= (point + 1) ? 'block' : 'none'}} 
@@ -203,6 +203,8 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
             const generateDatasets = (datasets: DataSetType[], legs:LegType[]):DataSetType[] => {
                 return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
             }
+            console.log('LEGS = ', newLegs)
+            console.log('DATASETS = ', props.datasets)
             props.updateDatasets(generateDatasets(props.datasets, newLegs)) 
         }
     }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from 'react'
+import React, { FunctionComponent} from 'react'
 // styles 
 import '../form-parts/fields.scss'
 import '../form-parts/buttons.scss'
@@ -7,7 +7,7 @@ import '../form-parts/form-container.scss'
 import * as Yup from 'yup';
 import {withFormik, Form, Field, FormikProps} from 'formik'
 import LegForm, {Props as LegProps}  from './LegForm';
-import { Graph as GraphType, Leg as LegType} from '../../store/graph/types';
+import { Graph as GraphType} from '../../store/graph/types';
 // redux
 import {connect, ConnectedProps} from 'react-redux'
 import {thunkCreateGraph, thunkUpdateGraph} from '../../store/graph/thunk'
@@ -111,7 +111,6 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
     handleSubmit: (values, {props}) => {
         
         let id = props.match.params.id
-        console.log('props' , props) 
         // form a graph
         let newGraph: GraphType = {
             graphName: values.graphName,
@@ -124,7 +123,7 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         }else{
             props.thunkCreateGraph(newGraph)
         }
-       
+       props.history.push('/')
     }
 })(InnerForm)
 

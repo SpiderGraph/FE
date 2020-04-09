@@ -75,6 +75,7 @@ export type CreateGraphStart = {
 
 export type CreateGraphSuccess = {
     type: ActionTypes.CREATE_GRAPH_SUCCESS,
+    payload: Graph
 }
 
 export type CreateGraphFailure = {
@@ -104,7 +105,11 @@ export type UpdateGraphStart = {
 }
 
 export type UpdateGraphSuccess = {
-    type: ActionTypes.UPDATE_GRAPH_SUCCESS
+    type: ActionTypes.UPDATE_GRAPH_SUCCESS,
+    payload: {
+        id: string,
+        body: Graph
+    }
 }
 
 export type UpdateGraphFailure = {
