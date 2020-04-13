@@ -9,7 +9,10 @@ export const thunkCreateGraph = (graph: Graph): AppThunk => dispatch => {
     dispatch(createGraphStart())
     axiosWithAuth()
         .post(`/graphs`, graph)
-        .then(res => dispatch(createGraphSuccess(graph)))
+        .then(res => {
+            let newGraph:Graph = res.data
+            dispatch(createGraphSuccess(newGraph))
+        })
         .catch(err => dispatch(createGraphFailure(err)))
 }
 
