@@ -9,12 +9,12 @@ $breakpoint-tablet: 800px;
         border-bottom: 1.5px solid #ffffff9e;
     }
     .center{
+        display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
-    .navbar :nth-child(1){
-        display: none;
-    }
+   
     .fa-align-justify{
         position: absolute;
         font-size: 24px;

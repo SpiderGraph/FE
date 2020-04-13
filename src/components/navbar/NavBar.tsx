@@ -63,14 +63,14 @@ const NavBar: FunctionComponent<PropsFromRedux> = ({
                             <NavLink exact to="/create-graph" activeClassName="selected">Create Graph</NavLink>
                         </>
                     }
-                </div> 
+               
                 {!auth && 
                     <>
                         <NavLink exact to="/login"  activeClassName="selected">Login</NavLink> 
                         <NavLink exact to="/register"  activeClassName="selected">Register</NavLink>
                     </>
                 }
-                
+                 </div> 
                 {auth && <NavLink to="/" onClick={() => logout()}>Logout</NavLink>}
             </nav>
             <i className="fa fa-align-justify" onClick={() => setContent(!content)}></i>
