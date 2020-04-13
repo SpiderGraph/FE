@@ -90,7 +90,6 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
         case ActionTypes.UPDATE_GRAPH_FAILURE:
             return{
                 ...state,
-                error: action.payload
             }
         default: 
             return state

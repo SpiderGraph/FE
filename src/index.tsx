@@ -11,7 +11,8 @@ import thunk from 'redux-thunk'
 // routing
 import {BrowserRouter as Router} from 'react-router-dom'
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+export const store = createStore(rootReducer, applyMiddleware(thunk))
+
 
 ReactDOM.render(
     <Provider store={store}>

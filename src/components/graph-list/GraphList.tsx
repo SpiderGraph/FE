@@ -77,8 +77,8 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
 
                 <div >
                     <div className="line-header" onClick={() => closeTab('acc1')}>
-                        <h2 className="sub-title">Legs</h2>
-                        {/* <span>&#x5e;</span> */}
+                        <h2>Legs</h2>
+                        <i className={`fa fa-angle-down ${acc.acc1 ? " fa fa-angle-rotate" : ""}`}></i>
                     </div>
                     
                     <div className={`content ${acc['acc1'] ? " content-open" : " "}`}>
@@ -109,7 +109,7 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
                 <div>
                     <div className="line-header" onClick={() => closeTab('acc2')}>
                         <h2 className="sub-title">Datasets</h2>
-                        {/* <span>&#x5e;</span> */}
+                        <i className={`fa fa-angle-down ${acc.acc2 ? " fa fa-angle-rotate" : ""}`}></i>
                     </div>
                     {
                         datasets.length > 0 && 
