@@ -10,9 +10,21 @@
         font-size: 1.8rem;
         margin-bottom: 20px;
     }
-    .sub-title{
+    .fa-angle-down {
+        font-size: 1.5rem;
+        transition: all .6s cubic-bezier(0.080, 1.090, 0.320, 1.275);
+        color: rgba(255,255,255, 1);
+    }
+    .fa-angle-rotate{
+        transform: rotate(180deg);
+    }
+    .line-header{
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         width: 100%;
-        padding: 5px;
+        padding: 5px 10px 5px 5px;
         font-size: 1.5rem;
         margin: 2.5px 0 2.5px 0;
         background: rgba(59, 93, 138, 0.699);
@@ -20,9 +32,6 @@
         &:hover{
             background: rgba(62, 82, 104, 0.699);
         }
-    }
-    .line-header{
-        cursor: pointer;
     }
     .line{
         padding: 4px;

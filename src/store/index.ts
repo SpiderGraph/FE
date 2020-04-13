@@ -1,6 +1,7 @@
 // combine reducers
-import { combineReducers } from "redux";
-import { graphReducer } from "./graph/reducers";
+import { combineReducers } from "redux"
+import { graphReducer } from "./graph/reducers"
+import { authReducer } from './auth/reducers'
 // thunk
 import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
@@ -8,6 +9,7 @@ import { Action } from 'redux'
 // create shape of all reducers
 
 export const rootReducer = combineReducers({
+    auth: authReducer,
     graph: graphReducer,
 })
 
