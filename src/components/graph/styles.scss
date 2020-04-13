@@ -20,3 +20,18 @@
 .point{
     cursor: pointer;
 }
+
+
+.ds-list{
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.ds-cross{
+    text-decoration: line-through;
+}

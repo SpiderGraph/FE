@@ -23,6 +23,7 @@ const Graph: FunctionComponent<Props> = ({
     handleLeg
     }) => {
     const [name, setName] = useState(graphName)
+    const [showDS, setShowDS] = useState(dataSets && new Array(dataSets.length).fill(true))
     let graphWidth =  GRAPH_WIDTH
     let graphHeight = GRAPH_HEIGTH
  
@@ -31,6 +32,15 @@ const Graph: FunctionComponent<Props> = ({
             handleLeg(leg)
         }
     }
+
+    function hideDS(i: number){
+        if(showDS){
+            let ds = showDS.slice()
+            ds[i] = !ds[i]
+            setShowDS(ds)
+        } 
+    }
+
   
     return (
         <div className={`graph ${signleView ? '' : 'point'}`}>
@@ -41,9 +51,14 @@ const Graph: FunctionComponent<Props> = ({
 
             {/* dataset list */}
             {(signleView === true)  && 
-                <div style={{margin: 'auto', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                <div className={`ds-list`}>
                     {dataSets && dataSets.length > 0 && dataSets.map((dataset, index) => {
-                        return <span key={index} style={{color: 'white', borderBottom: `5px solid ${dataset.color}`, margin: '0px 5px'}}>{dataset.dataSetName}</span>
+                        return <span key={index}
+                                     onClick={() => hideDS(index)}
+                                     className={`${showDS && showDS[index] ? '' : 'ds-cross'}`}
+                                     style={{color: 'white', borderBottom: `5px solid ${dataset.color}`, margin: '0px 5px'}}>
+                                    {dataset.dataSetName}
+                               </span>
                     })}
                 </div>
              }  
@@ -52,7 +67,9 @@ const Graph: FunctionComponent<Props> = ({
                 
                 {dataSets && dataSets.length  > 0 && 
                     dataSets.map((dataset, index) => {
-                    return <polygon key={index} points={dataset.points} fill={dataset.color} opacity="0.3"></polygon>
+                        if(showDS && showDS[index]){
+                              return <polygon key={index} points={dataset.points} fill={dataset.color} opacity="0.3"></polygon>
+                        }
                     })
                 }
 
