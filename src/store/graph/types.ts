@@ -2,6 +2,7 @@
 // Graph`s state
 export type GraphState = {
     graphs: Graph[],
+    filteredGraphs: Graph[],
     loading: boolean,
     error: string, 
 }
@@ -51,7 +52,9 @@ export enum ActionTypes {
 
     UPDATE_GRAPH_START = 'UPDATE_GRAPH_START',
     UPDATE_GRAPH_SUCCESS = 'UPDATE_GRAPH_SUCCESS',
-    UPDATE_GRAPH_FAILURE = 'UPDATE_GRAPH_FAILURE'
+    UPDATE_GRAPH_FAILURE = 'UPDATE_GRAPH_FAILURE',
+
+    FILTER_GRAPHS = "FILTER_GRAPHS"
 }
 
 // GRAPH RETRIEVAL 
@@ -118,6 +121,13 @@ export type UpdateGraphFailure = {
     payload: string,
 }
 
+// FILTER GRAPHS
+
+export type FilterGraphs = {
+    type: ActionTypes.FILTER_GRAPHS,
+    payload: Graph[]
+}
+
 export type GraphActionTypes = 
     | GetGraphsStart
     | GetGraphsSuccess
@@ -134,3 +144,5 @@ export type GraphActionTypes =
     | UpdateGraphStart
     | UpdateGraphSuccess
     | UpdateGraphFailure
+
+    | FilterGraphs
