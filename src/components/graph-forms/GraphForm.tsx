@@ -115,7 +115,8 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         let newGraph: GraphType = {
             graphName: values.graphName,
             legs: props.legs,
-            dataSets: props.datasets
+            dataSets: props.datasets,
+            date: new Date()
         }
         if(id){
             // update graph

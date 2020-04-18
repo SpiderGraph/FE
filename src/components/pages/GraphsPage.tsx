@@ -27,10 +27,11 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
 
     return (
         <>
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start', marginTop: '50px'}}>
+            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px'}}>
                 {graphs.map((graph, index) =>
                     <Card 
                     key={index}
+                    date={graph.date}
                     id={graph._id}
                     title={graph.graphName}
                     content={

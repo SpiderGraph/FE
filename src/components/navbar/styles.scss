@@ -7,7 +7,7 @@ $breakpoint-tablet: 800px;
         align-items: center;
         padding: 5px 0 5px 0;
         border-bottom: 1.5px solid #ffffff9e;
-    }
+    }   
     .center{
         display: flex;
         flex-direction: column;
@@ -39,7 +39,6 @@ $breakpoint-tablet: 800px;
 
 .navbar{
     display: flex;
-    // background: black;
     font-weight: bold;
     transition: all .3s ease-out;
     margin-top: 0;

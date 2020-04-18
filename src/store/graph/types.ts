@@ -3,14 +3,15 @@
 export type GraphState = {
     graphs: Graph[],
     loading: boolean,
-    error: string,
+    error: string, 
 }
 
 export type Graph = {
     _id?: string,
     graphName: string,
     dataSets?: DataSet[],
-    legs: Leg[]
+    legs: Leg[],
+    date?: Date,
 }
 
 export type Leg = {

@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react'
+import React, {FunctionComponent, useState, useEffect} from 'react'
 // styles
 import './styles.scss'
 // types
@@ -23,9 +23,13 @@ const Graph: FunctionComponent<Props> = ({
     handleLeg
     }) => {
     const [name, setName] = useState(graphName)
-    const [showDS, setShowDS] = useState(dataSets && new Array(dataSets.length).fill(true))
+    const [showDS, setShowDS] = useState<boolean[]>([])
     let graphWidth =  GRAPH_WIDTH
     let graphHeight = GRAPH_HEIGTH
+
+    useEffect(() => {
+        setShowDS(new Array(dataSets ? dataSets.length : 0).fill(true))
+    }, [dataSets])
  
     function setLeg(leg: number):void{
         if(handleLeg){
@@ -55,7 +59,7 @@ const Graph: FunctionComponent<Props> = ({
                     {dataSets && dataSets.length > 0 && dataSets.map((dataset, index) => {
                         return <span key={index}
                                      onClick={() => hideDS(index)}
-                                     className={`${showDS && showDS[index] ? '' : 'ds-cross'}`}
+                                     className={`${showDS && showDS[index] ? ' ' : ' ds-cross '}`}
                                      style={{color: 'white', borderBottom: `5px solid ${dataset.color}`, margin: '0px 5px'}}>
                                     {dataset.dataSetName}
                                </span>
