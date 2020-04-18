@@ -4,6 +4,7 @@ import { GraphState, ActionTypes, GraphActionTypes } from "./types"
 
 const initialState: GraphState = {
     graphs: [],
+    filteredGraphs: [],
     loading: false,
     error: ''
 }
@@ -19,6 +20,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
             return{
                 ...state,
                 graphs: [...state.graphs, action.payload],
+                filteredGraphs: [...state.graphs, action.payload],
                 error: '',
                 loading: false
             }
@@ -39,6 +41,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
                 ...state,
                 error: '',
                 graphs: action.payload,
+                filteredGraphs: action.payload,
                 loading: false
             }
         case ActionTypes.GET_GRAPHS_FAILURE:
@@ -58,6 +61,7 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
             return {
                 ...state,
                 graphs: deleteGraph,
+                filteredGraphs: deleteGraph,
                 loading: false,
                 error: ''
             }
@@ -84,12 +88,19 @@ export function graphReducer(state = initialState, action: GraphActionTypes){
             return{
                 ...state,
                 graphs: updateGraph,
+                filteredGraphs: updateGraph,
                 loading: false,
                 error: '',
             }
         case ActionTypes.UPDATE_GRAPH_FAILURE:
             return{
                 ...state,
+            }
+        // FILTER GRAPHS
+        case ActionTypes.FILTER_GRAPHS:
+            return{
+                ...state,
+                filteredGraphs: action.payload
             }
         default: 
             return state

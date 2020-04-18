@@ -6,9 +6,10 @@ import {connect, ConnectedProps} from 'react-redux'
 import Graph from '../graph/Graph'
 import Card from '../card/Card'
 import { thunkGetGraphs } from '../../store/graph/thunk'
+import Filter from '../filter/Filter'
 
 const mapState = (state: RootState) => ({
-    graphs: state.graph.graphs
+    graphs: state.graph.filteredGraphs
 })
 
 const mapDispatch = {thunkGetGraphs}
@@ -27,6 +28,7 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
 
     return (
         <>
+            <Filter />
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px'}}>
                 {graphs.map((graph, index) =>
                     <Card 

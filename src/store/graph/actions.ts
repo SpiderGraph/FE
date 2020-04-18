@@ -1,4 +1,4 @@
-import { Graph, ActionTypes, GraphActionTypes } from "./types";
+import { Graph, ActionTypes, GraphActionTypes, FilterGraphs } from "./types";
 
 
 // for actions we need to type out its  parameters, and specify the return value
@@ -88,5 +88,14 @@ export function updateGraphFailure(err: string): GraphActionTypes{
     return{
         type: ActionTypes.UPDATE_GRAPH_FAILURE,
         payload: err
+    }
+}
+
+// filter graphs 
+
+export function filterGraphs(graphs: Graph[]): FilterGraphs{
+    return{
+        type: ActionTypes.FILTER_GRAPHS,
+        payload: graphs
     }
 }
