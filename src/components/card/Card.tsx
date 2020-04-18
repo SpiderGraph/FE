@@ -37,7 +37,6 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({
             let day = d.getDate()
             let month = d.getMonth() + 1
             let year = d.getFullYear()
-            console.log('DATE ', typeof d)
             return `${day}/${month}/${year}`
         }
     }
@@ -50,7 +49,6 @@ const Card:FunctionComponent<Props & RouteComponentProps> = ({
                     {content}
                 </div>
             </div> 
-            {console.log(formatDate(date))}
             <div className="actions">
                 <h1 className="title">{title}</h1>
                 <h1 className="title-secondary">Created: {formatDate(date)}</h1>
