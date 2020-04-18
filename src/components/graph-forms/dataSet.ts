@@ -59,10 +59,8 @@ export function generatePolygon(legs:LegType[], points:number[] = []) {
     if(points.length > 0){
         radius = new Array(legs.length).fill(0)
         radius.splice(0, points.length, ...points )
-        console.log('UPDATE')
     }else {
         radius = generateRadius(legs) 
-        console.log('DENERATE NEW')
     }
 
     // the middle point to rotate around, cx cy

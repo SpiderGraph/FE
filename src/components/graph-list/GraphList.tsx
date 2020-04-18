@@ -3,6 +3,7 @@ import { Leg, DataSet } from '../../store/graph/types'
 import './styles.scss'
 import {Props as FormProps}  from '../graph-forms/LegForm';
 import { generatePolygon } from '../graph-forms/dataSet';
+import { GRAPH_HEIGTH } from '../graph/Graph';
 
 type Props = {
     pointFields: number,
@@ -49,7 +50,6 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
              const generateDatasets = (datasets: DataSet[], legs:Leg[]):DataSet[] => {
                 return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
             }
-            console.log('UPDATED DS ', updatedDatasets)
             updateDatasets(generateDatasets(updatedDatasets, updatedLegs)) 
         }
     }
@@ -60,11 +60,31 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
     }
 
     function deletePoint(legIndex: number, pointIndex: number){
+        let halfHeight = GRAPH_HEIGTH / 2
+        const generateDatasets = (datasets: DataSet[], legs:Leg[]):DataSet[] => {
+            return datasets.map(ds =>{
+                // if the point that needs to be deleted has a ds on it, delete ds on this leg
+                if(ds.radius){
+                    if(ds.radius[legIndex] === halfHeight - ((pointIndex + 1) * 63)){
+                        ds.radius[legIndex] = 0
+                        return ({...ds, points: generatePolygon(legs, ds.radius)})
+                    }else{
+                        // else reduce the ds radius 
+                        ds.radius[legIndex] = ds.radius[legIndex] + 63
+                        return ({...ds, points: generatePolygon(legs, ds.radius)})
+                    }
+                }
+                // stay the same
+                return ({...ds, points: generatePolygon(legs, ds.radius)})
+            })
+        }
+
         if(legs[legIndex].points.length > 1){
             let updatedPoints = legs[legIndex].points.filter((p, i) => i !== pointIndex)
             let newLegs = legs.slice()
             newLegs[legIndex].points = updatedPoints
             setLegs(newLegs)
+            updateDatasets(generateDatasets(datasets, legs)) 
         }
     }
 
