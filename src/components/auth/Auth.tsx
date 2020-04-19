@@ -13,7 +13,7 @@ import { loginThunk, registerThunk  } from '../../store/auth/thunk'
 import {RouteComponentProps, Link} from 'react-router-dom'
 
 const mapState = (state: RootState) => ({
-
+    isLoading: state.auth.isLoading
 })
 
 const mapDispatch = {
@@ -39,7 +39,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
     formState = true,
     touched,
     errors,
-    resetForm
+    resetForm,
+    isLoading
 }) =>{
     useEffect(() =>{
         resetForm()
@@ -72,7 +73,10 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
                     </label>
 
                     <button type="submit" className={`button-metal submit-block`}>
-                        {formState ? "Login" : "Register"}
+                        {isLoading  
+                            ? <p><i className="fa fa-spinner fa-spin" style={{color: 'white'}}/></p>
+                            : formState ? "Login" : "Register"
+                        }
                     </button>
                     {formState && 
                         <Link to="/register">{`Don't have an account? Sign up here`}</Link>

@@ -16,8 +16,11 @@ import DatasetForm from './DatasetForm';
 import GraphList from '../graph-list/GraphList';
 // routing
 import {RouteComponentProps, withRouter} from 'react-router-dom'
+import { RootState } from '../../store';
 
-const mapState = null
+const mapState = (state: RootState) => ({
+    isLoading: state.graph.loading
+})
 
 const mapDispatch = {thunkCreateGraph, thunkUpdateGraph}
 
@@ -48,7 +51,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
         touched,
         currentLeg,
         setCurrentLeg,
-        match
+        match,
+        isLoading
     } = props
     let id = match.params.id
     return (
@@ -80,7 +84,10 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                         updateDatasets={updateDatasets}
                     />
                     <button className={`button-metal submit-block ${legs.length < 3 && ' btn-dis '}`} type="submit">
-                        {`${id ? 'UPDATE GRAPH' : 'CREATE GRAPH'}`}
+                        {isLoading 
+                            ? <p><i className="fa fa-spinner fa-spin" style={{color: 'white'}}/></p>
+                            : `${id ? 'UPDATE GRAPH' : 'CREATE GRAPH'}`
+                        } 
                     </button>
 
                 </Form>
