@@ -7,9 +7,11 @@ import Graph from '../graph/Graph'
 import Card from '../card/Card'
 import { thunkGetGraphs } from '../../store/graph/thunk'
 import Filter from '../filter/Filter'
+import { withRouter } from 'react-router-dom'
 
 const mapState = (state: RootState) => ({
-    graphs: state.graph.filteredGraphs
+    graphs: state.graph.filteredGraphs,
+    isLoading: state.graph.loading,
 })
 
 const mapDispatch = {thunkGetGraphs}
@@ -20,7 +22,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 type Props = PropsFromRedux 
 
-const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
+const GraphsPage: FunctionComponent<Props> = ({
+    graphs, 
+    thunkGetGraphs,
+    isLoading
+}) => {
 
     useEffect(() => {
         thunkGetGraphs()
@@ -29,8 +35,9 @@ const GraphsPage: FunctionComponent<Props> = ({graphs, thunkGetGraphs}) => {
     return (
         <>
             <Filter />
-            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px'}}>
-                {graphs.map((graph, index) =>
+            <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px', alignItems: 'center', height: '50vh'}}>
+                {isLoading &&  <p><i className="fa fa-spinner fa-spin" style={{color: 'white', fontSize: '30px', margin: "auto"}}/></p>}
+                {graphs && graphs.map((graph, index) =>
                     <Card 
                     key={index}
                     date={graph.date}
