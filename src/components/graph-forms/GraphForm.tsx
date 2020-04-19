@@ -127,11 +127,10 @@ const GraphForm = withFormik<MyFormProps, FormValues>({
         }
         if(id){
             // update graph
-            props.thunkUpdateGraph(id, newGraph)
+            props.thunkUpdateGraph(id, newGraph, props.history)
         }else{
-            props.thunkCreateGraph(newGraph)
+            props.thunkCreateGraph(newGraph, props.history)
         }
-       props.history.push('/')
     }
 })(InnerForm)
 
