@@ -36,7 +36,7 @@ const GraphsPage: FunctionComponent<Props> = ({
         <>
             <Filter />
             <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', marginTop: '50px', alignItems: 'center', height: '50vh'}}>
-                {isLoading &&  <p><i className="fa fa-spinner fa-spin" style={{color: 'white', fontSize: '30px', margin: "auto"}}/></p>}
+                {(isLoading || !graphs)&&  <p><i className="fa fa-spinner fa-spin" style={{color: 'white', fontSize: '30px', margin: "auto"}}/></p>}
                 {graphs && graphs.map((graph, index) =>
                     <Card 
                     key={index}
