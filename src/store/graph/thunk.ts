@@ -3,15 +3,16 @@ import { AppThunk } from "..";
 import { createGraphSuccess, createGraphStart, getGraphsStart, getGraphsSuccess, getGraphsFailure, createGraphFailure, deleteGraphStart, deleteGraphSuccess, deleteGraphFailure, updateGraphStart, updateGraphSuccess, updateGraphFailure } from "./actions";
 import { axiosWithAuth } from "../../utils/authWithAxios";
 import {AxiosResponse, AxiosError} from 'axios'
+import {History} from 'history'
 
-
-export const thunkCreateGraph = (graph: Graph): AppThunk => dispatch => {
+export const thunkCreateGraph = (graph: Graph, history: History): AppThunk => dispatch => {
     dispatch(createGraphStart())
     axiosWithAuth()
         .post(`/graphs`, graph)
         .then((res: AxiosResponse) => {
             let newGraph:Graph = res.data
             dispatch(createGraphSuccess(newGraph))
+            history.push('/')
         })
         .catch((err: AxiosError) => dispatch(createGraphFailure(err.message)))
 }
@@ -38,10 +39,13 @@ export const thunkDeleteGraph = (id: string): AppThunk => dispatch => {
 
 // GRAPH UPDATE
 
-export const thunkUpdateGraph = (id: string, graph: Graph): AppThunk => dispatch => {
+export const thunkUpdateGraph = (id: string, graph: Graph, history: History): AppThunk => dispatch => {
     dispatch(updateGraphStart)
     axiosWithAuth()
         .put(`/graphs/${id}`, graph)
-        .then((res: AxiosResponse) => dispatch(updateGraphSuccess(id, graph)))
+        .then((res: AxiosResponse) => {
+            dispatch(updateGraphSuccess(id, graph))
+            history.push('/')
+        })
         .catch((err: AxiosError)=> dispatch(updateGraphFailure(err.message)))
 }
