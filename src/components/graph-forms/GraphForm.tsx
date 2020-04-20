@@ -1,4 +1,4 @@
-import React, { FunctionComponent} from 'react'
+import React, { FunctionComponent, useEffect, useState} from 'react'
 // styles 
 import '../form-parts/fields.scss'
 import '../form-parts/buttons.scss'
@@ -55,6 +55,29 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
         isLoading
     } = props
     let id = match.params.id
+
+    const [content, setContent] = useState(false)
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        function handleResize() {
+            let w:number = window.innerWidth
+            setWindowWidth(w)
+        }
+    
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        if(windowWidth > 800){
+            setContent(true)
+        }
+        if(windowWidth <= 800){
+            setContent(false)
+        }
+    }, [windowWidth])
+
     return (
         <div className="form-container">
             <h1 className="title">Create a new spider graph</h1>
@@ -91,14 +114,17 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>>  = (props) =>
                     </button>
 
                 </Form>
-                <GraphList 
-                    pointFields={pointFields}
-                    setPointFields={setPointFields}
-                    legs={legs}
-                    setLegs={setLegs}
-                    datasets={datasets}
-                    updateDatasets={updateDatasets}
-                 />
+                {content && 
+                    <GraphList 
+                        pointFields={pointFields}
+                        setPointFields={setPointFields}
+                        legs={legs}
+                        setLegs={setLegs}
+                        datasets={datasets}
+                        updateDatasets={updateDatasets}
+                    />
+                }
+                
         </div>
     )
 }
