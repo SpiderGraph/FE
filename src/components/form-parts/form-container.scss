@@ -42,6 +42,12 @@ $error-color: rgb(255, 81, 81);
     @include flex-start()
 }
 
+.flex-end{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
 @mixin form {
     @include flex-column();
     max-width: 400px;
