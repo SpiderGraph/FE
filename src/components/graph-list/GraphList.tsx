@@ -61,10 +61,12 @@ const GraphList:FunctionComponent<Props> = ({legs, datasets, setLegs, updateData
 
     function deletePoint(legIndex: number, pointIndex: number){
         let halfHeight = GRAPH_HEIGTH / 2
+
         const generateDatasets = (datasets: DataSet[], legs:Leg[]):DataSet[] => {
             return datasets.map(ds =>{
                 // if the point that needs to be deleted has a ds on it, delete ds on this leg
-                if(ds.radius){
+                let pointR = halfHeight - ((pointIndex + 1) * 63)
+                if(ds.radius && ds.radius[legIndex] <= pointR && ds.radius[legIndex] !== 0){
                     if(ds.radius[legIndex] === halfHeight - ((pointIndex + 1) * 63)){
                         ds.radius[legIndex] = 0
                         return ({...ds, points: generatePolygon(legs, ds.radius)})
