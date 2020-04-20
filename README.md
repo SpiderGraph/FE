@@ -31,3 +31,25 @@ Some rules are applied to deletion:
 * if the point that is not the edge of the dataset is deleted, then all datasets that is greater than this point will be reduced
 
 ![](delete-parts.gif)
+
+### Fuzzy search
+
+![](filter.gif)
+
+## Tech Stack
+
+### Front end built using:
+
+* React
+* Redux
+* TypeScript
+* Axios
+* Formik
+* Yup
+
+### Backend built using:
+
+* Node
+* Express
+* Mongoose
+
