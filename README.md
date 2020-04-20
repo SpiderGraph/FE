@@ -10,7 +10,7 @@ Spider Graph allows creation of spider graphs. You can visualize your business g
 
 ### Graph Creation
 
-User can create a new graph selecting the number of arms, points and datasets. Each arm can have points starting from 1 and user can add more as needed. The graph also can include several datasets, that are a polynomial with the selected color.
+User can create a new graph selecting the number of arms, points and datasets. Each arm can have points starting from 1 and user can add more as needed. The graph also can include several datasets, that are a polygon with the selected color.
 
 ![](create-graph.gif)
 
