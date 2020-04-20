@@ -26,12 +26,13 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
     legs
 }) =>{
     return (
-        <Form className="flex-start">
+        <Form className="flex-end">
             <label htmlFor="dataset-name" className="label">
                 Dataset Name
                 <Field
                     id="dataset-name" 
                     name="dataSetName" 
+                    style={{margin: 0}}
                     className={`field-metal ${touched.dataSetName && errors.dataSetName && ' field-error'}`}
                 />
             </label>
