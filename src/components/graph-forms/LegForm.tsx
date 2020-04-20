@@ -11,6 +11,7 @@ import './leg-styles.scss'
 import { Leg as LegType, DataSet as DataSetType, Point as PointType} from '../../store/graph/types';
 // utils
 import { generatePolygon} from './dataSet'
+import { GRAPH_HEIGTH } from '../graph/Graph';
 
 
 // Shape of form values
@@ -184,6 +185,26 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
             props.setLegs(newLegs)
             props.setCurrentLeg(undefined)
             props.setPointFields(2)
+            // update datasets when delete a point field (point)
+            let legIndex = props.currentLeg
+            let pointIndex = newPoints.length
+            let halfHeight = GRAPH_HEIGTH / 2
+            let ds = props.datasets.map(ds =>{
+                // if the point that needs to be deleted has a ds on it, delete ds on this leg
+                if(ds.radius){
+                    if(ds.radius[legIndex] === halfHeight - ((pointIndex + 1) * 63)){
+                        ds.radius[legIndex] = 0
+                        return ({...ds, points: generatePolygon(newLegs, ds.radius)})
+                    }else{
+                        // else reduce the ds radius 
+                        ds.radius[legIndex] = ds.radius[legIndex] 
+                        return ({...ds, points: generatePolygon(newLegs, ds.radius)})
+                    }
+                }
+                // stay the same
+                return ({...ds, points: generatePolygon(newLegs, ds.radius)})
+            })
+            props.updateDatasets(ds)
         }else{
             //  add a new leg to array of legs
             newLegs.push(newLeg)
@@ -203,8 +224,8 @@ const LegForm = withFormik<MyFormProps & Props, FormValues>({
             const generateDatasets = (datasets: DataSetType[], legs:LegType[]):DataSetType[] => {
                 return datasets.map(ds => ({...ds, points: generatePolygon(legs, ds.radius)}))
             }
-            console.log('LEGS = ', newLegs)
-            console.log('DATASETS = ', props.datasets)
+            
+
             props.updateDatasets(generateDatasets(props.datasets, newLegs)) 
         }
     }
