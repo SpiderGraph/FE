@@ -1,0 +1,49 @@
+@mixin flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+@mixin flex-center-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page{
+    min-width: 200px;
+    color: white;
+    @include flex-center();
+    width: 100%;
+    h2, p {
+        text-align: center;
+        text-transform: capitalize;
+    }
+    .section{
+        width: 100%;
+        @include flex-center();
+        padding: 8rem 0 10rem 0;
+        span{
+            color: #ff6565;
+        }
+    }
+    .section-row{
+        @include flex-center-row();
+    }
+    .title{
+        font-size: 3rem;
+        margin: 2.5rem 0 1.5rem 0;
+    }
+    .secondary-text{
+        font-size: 1.2rem;
+        margin: 1.5rem;
+    }
+    .button-metal{
+        margin: 1.5rem 1rem 1.5rem 1rem;
+        min-width: 90px;
+        padding: 8px 7px 8px 7px;
+        font-size: 1rem;
+        border: 1px solid rgb(255, 255, 64);
+    }
+
+}

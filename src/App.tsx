@@ -8,6 +8,7 @@ import CreateGraphPage from './components/pages/CreateGraphPage';
 import NavBar from './components/navbar/NavBar';
 import Auth from './components/auth/Auth';
 import PrivateRoute from './utils/PrivatRoute';
+import HomePage from './components/pages/HomePage';
 
 const App: FunctionComponent = () => {
   return (
@@ -25,6 +26,7 @@ const App: FunctionComponent = () => {
           <PrivateRoute path="/edit-graph:id">
             <CreateGraphPage />
           </PrivateRoute>
+          <Route path="/home" component={HomePage} />
           <Route path="/login"  render={props => <Auth {...props} formState={true} />}/>
           <Route path="/register" render={props => <Auth {...props} formState={false} />} />
         </Switch>
