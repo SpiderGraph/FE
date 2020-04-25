@@ -66,6 +66,9 @@ const NavBar: FunctionComponent<PropsFromRedux> = ({
                
                 {!auth && 
                     <>
+                        <NavLink exact to="/home" >
+                            <Spider position={ {x: 1, y: 1} } rotation={45} color={'white'} />
+                        </NavLink>
                         <NavLink exact to="/login"  activeClassName="selected">Login</NavLink> 
                         <NavLink exact to="/register"  activeClassName="selected">Register</NavLink>
                     </>

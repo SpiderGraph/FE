@@ -1,5 +1,6 @@
 import axios, {AxiosResponse, AxiosError} from "axios";
-
+import { store } from "..";
+import {Logout} from '../store/auth/actions'
 
 export let axiosWithAuth = () => {
     let token = localStorage.getItem("token");
@@ -17,6 +18,7 @@ export let axiosWithAuth = () => {
         (error: AxiosError) => {
             if(error.response?.status === 401){
                 localStorage.removeItem("token")
+                store.dispatch(Logout())
             }
             return Promise.resolve({ error });
     });

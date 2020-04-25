@@ -31,7 +31,6 @@ export function authReducer(state = initialState, action: AuthActionTypes){
                 error: action.payload
             }
         case ActionTypes.LOGOUT:
-            console.log('LOGOUT')
             return{
                 ...state,
                 isAuth: false,

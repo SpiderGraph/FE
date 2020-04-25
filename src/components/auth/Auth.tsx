@@ -100,11 +100,9 @@ const Auth = withFormik<Props, FormValues>({
     }),
     handleSubmit(values, {props}){
         if(props.formState){
-            console.log("LOGIN")
             props.loginThunk({username: values.username, password: values.password}, props.history)
         }else{
             // register
-            console.log("REGISTER")
             props.registerThunk({username: values.username, password: values.password}, props.history)
         }
     }
