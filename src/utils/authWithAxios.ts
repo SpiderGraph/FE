@@ -1,5 +1,5 @@
 import axios, {AxiosResponse, AxiosError} from "axios";
-import { store } from "..";
+import { store } from "../index";
 import {Logout} from '../store/auth/actions'
 
 export let axiosWithAuth = () => {
@@ -17,8 +17,9 @@ export let axiosWithAuth = () => {
         }, 
         (error: AxiosError) => {
             if(error.response?.status === 401){
-                localStorage.removeItem("token")
                 store.dispatch(Logout())
+                let link = window.location
+                window.location.replace(`${link}login`);
             }
             return Promise.resolve({ error });
     });
