@@ -58,7 +58,9 @@ const NavBar: FunctionComponent<PropsFromRedux> = ({
                 <div className={`center ${windowWidth > 800 ? " left " : " "}`}>
                     {auth && 
                         <>
-                            <Spider position={ {x: 1, y: 1} } rotation={45} color={'white'} />
+                            <NavLink exact to="/home" >
+                                <Spider position={ {x: 1, y: 1} } rotation={45} color={'white'} />
+                            </NavLink>
                             <NavLink exact to="/" activeClassName="selected">Graphs</NavLink>
                             <NavLink exact to="/create-graph" activeClassName="selected">Create Graph</NavLink>
                         </>
