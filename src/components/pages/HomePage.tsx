@@ -10,7 +10,6 @@ type Props = {
 const HomePage: FunctionComponent<Props> = ({history}) => {
     return(
         <div className="home-page">
-            {console.log('PROPS ', history)}
             <div className="section">
                 <h2 className="title">
                     visualizer for your 

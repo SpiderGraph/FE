@@ -9,8 +9,12 @@ import '../form-parts/form-container.scss'
 // redux
 import { ConnectedProps, connect } from 'react-redux'
 import { RootState } from '../../store'
-import { loginThunk, registerThunk  } from '../../store/auth/thunk'
-import {RouteComponentProps, Link} from 'react-router-dom'
+import { loginThunk, registerThunk } from '../../store/auth/thunk'
+import { RouteComponentProps, Link } from 'react-router-dom'
+import { store } from '../../index'
+import { CleanError } from '../../store/auth/actions'
+
+type AppDispatch = typeof store.dispatch
 
 const mapState = (state: RootState) => ({
     isLoading: state.auth.isLoading,
@@ -19,7 +23,7 @@ const mapState = (state: RootState) => ({
 
 const mapDispatch = {
     loginThunk,
-    registerThunk 
+    registerThunk,
 }
 
 const connector = connect(mapState, mapDispatch)
@@ -42,10 +46,11 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
     errors,
     resetForm,
     isLoading,
-    authError
+    authError,
 }) =>{
     useEffect(() =>{
         resetForm()
+        store.dispatch(CleanError())
     }, [formState])
 
     return (

@@ -44,3 +44,9 @@ export function RegisterFailure(err: string):AuthActionTypes{
         payload: err
     }
 }
+
+export function CleanError():AuthActionTypes{
+    return{
+        type: ActionTypes.CLEAN_ERR,
+    }
+}

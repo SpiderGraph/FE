@@ -53,6 +53,12 @@ export function authReducer(state = initialState, action: AuthActionTypes){
                 isLoading: false,
                 error: action.payload
             }
+        case ActionTypes.CLEAN_ERR:
+            return{
+                ...state,
+                error: '',
+                isLoading: false
+            }
         default:
             return state
     }
