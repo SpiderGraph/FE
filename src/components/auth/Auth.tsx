@@ -13,7 +13,8 @@ import { loginThunk, registerThunk  } from '../../store/auth/thunk'
 import {RouteComponentProps, Link} from 'react-router-dom'
 
 const mapState = (state: RootState) => ({
-    isLoading: state.auth.isLoading
+    isLoading: state.auth.isLoading,
+    authError: state.auth.error
 })
 
 const mapDispatch = {
@@ -40,7 +41,8 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
     touched,
     errors,
     resetForm,
-    isLoading
+    isLoading,
+    authError
 }) =>{
     useEffect(() =>{
         resetForm()
@@ -51,9 +53,11 @@ const InnerForm:FunctionComponent<Props & FormikProps<FormValues>> = ({
             <div className="auth-container">
 
                 <h1 className="title">
-                    {formState ? "Login" : "Register"}
+                    {formState ? "Login" : "Register"}  
+                        {authError.length > 0
+                            && <span style={{fontSize: '1rem', color: 'red'}}> - {authError}</span>
+                        }
                 </h1>
-
                 <Form  className="form">
                     <label htmlFor="username" className="label">
                         Username*
@@ -95,8 +99,8 @@ const Auth = withFormik<Props, FormValues>({
         password: ''
     }),
     validationSchema: Yup.object().shape({
-        username: Yup.string().required(),
-        password: Yup.string().required(),
+        username: Yup.string().min(6).required(),
+        password: Yup.string().min(6).required(),
     }),
     handleSubmit(values, {props}){
         if(props.formState){
