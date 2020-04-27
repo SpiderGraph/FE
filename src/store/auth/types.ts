@@ -14,7 +14,9 @@ export enum ActionTypes {
     REGISTER_SUCCESS = "REGISTER_SUCCESS",
     REGISTER_FAILURE = "REGISTER_FAILURE",
     
-    LOGOUT = 'LOGOUT'
+    LOGOUT = 'LOGOUT',
+
+    CLEAN_ERR = 'CLEAN_ERR',
 }
 
 type loginStart = {
@@ -47,6 +49,10 @@ type logout = {
     type: ActionTypes.LOGOUT
 }
 
+type cleanErr = {
+    type: ActionTypes.CLEAN_ERR
+}
+
 export type AuthActionTypes = 
     | loginStart 
     | loginSuccess
@@ -55,3 +61,4 @@ export type AuthActionTypes =
     | registerStart
     | registerSuccess
     | registerFailure
+    | cleanErr
