@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 // styles
 import './App.scss';
 // components
-import { Route, Switch, Router } from 'react-router-dom';
+import { Route, Switch, Router, Redirect } from 'react-router-dom';
 import GraphsPage from './components/pages/GraphsPage';
 import CreateGraphPage from './components/pages/CreateGraphPage';
 import NavBar from './components/navbar/NavBar';
@@ -29,6 +29,7 @@ const App: FunctionComponent = () => {
           <Route path="/home" component={HomePage} />
           <Route path="/login"  render={props => <Auth {...props} formState={true} />}/>
           <Route path="/register" render={props => <Auth {...props} formState={false} />} />
+          <Redirect to="login" />
         </Switch>
       </div>
     </div>
