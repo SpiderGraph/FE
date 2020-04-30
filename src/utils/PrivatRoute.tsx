@@ -11,7 +11,7 @@ const PrivateRoute: FunctionComponent<Props> = ({ children, ...rest}) => {
             {...rest}
             render={
                 props => 
-                !!localStorage.getItem("token")
+                !!localStorage.getItem("token") 
                     ? children
                     : <Redirect 
                         to={{
