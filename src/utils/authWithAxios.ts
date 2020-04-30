@@ -1,6 +1,6 @@
-import axios, {AxiosResponse, AxiosError} from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { store } from "../index";
-import {Logout} from '../store/auth/actions'
+import { Logout } from '../store/auth/actions'
 
 export let axiosWithAuth = () => {
     let token = localStorage.getItem("token");
@@ -19,7 +19,7 @@ export let axiosWithAuth = () => {
             if(error.response?.status === 401){
                 store.dispatch(Logout())
                 let link = window.location
-                window.location.replace(`${link}login`);
+                window.location.pathname = `/login`
             }
             return Promise.resolve({ error });
     });
