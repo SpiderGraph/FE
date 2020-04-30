@@ -29,7 +29,7 @@ const App: FunctionComponent = () => {
           <Route path="/home" component={HomePage} />
           <Route path="/login"  render={props => <Auth {...props} formState={true} />}/>
           <Route path="/register" render={props => <Auth {...props} formState={false} />} />
-          <Redirect to="login" />
+          <Redirect to="/login" />
         </Switch>
       </div>
     </div>
