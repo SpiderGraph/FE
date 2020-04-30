@@ -17,9 +17,8 @@ export let axiosWithAuth = () => {
         }, 
         (error: AxiosError) => {
             if(error.response?.status === 401){
+                localStorage.removeItem("token")
                 store.dispatch(Logout())
-                let link = window.location
-                window.location.pathname = `/login`
             }
             return Promise.resolve({ error });
     });
